@@ -2,9 +2,9 @@
 
 | Assistant | Role  |  
 |-----------|---|
-| XXXXX     | Developer  |   
-| XXXXX     |  Front-End Expert |  
-| XXXXX     |  Scrum Master |  
+| XXXXXX    | Developer  |   
+| XXXXXX    |  Front-End Expert |  
+| XXXXXX    |  Scrum Master |  
 
 ## Retrospective Overview 
 
