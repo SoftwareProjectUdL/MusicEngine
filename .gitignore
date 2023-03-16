@@ -139,4 +139,4 @@ GitHub.sublime-settings
 # custom 
 .DS_Store
 
-
+.idea/
