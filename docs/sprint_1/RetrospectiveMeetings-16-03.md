@@ -1,10 +1,10 @@
 # Sprint Retrospective Title (16-03-2023)
 
 | Assistant | Role  |  
-|-----------|---|
-| XXXXXX    | Developer  |   
-| XXXXXX    |  Front-End Expert |  
-| XXXXXX    |  Scrum Master |  
+|----------|---|
+| XXXXX    | Developer  |   
+| XXXXX    |  Front-End Expert |  
+| XXXXX    |  Scrum Master |  
 
 ## Retrospective Overview 
 
