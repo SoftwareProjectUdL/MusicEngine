@@ -2,9 +2,10 @@
 
 | Assistant | Role             |  
 |-----------|------------------|
-| XXXXXX    | Developer        |   
-| XXXXXX    | Front-End Expert |  
-| XXXXXX    | Scrum Master     |  
+| XXX       | Developers       |   
+| XX        | Requirements     |  
+| XX        | Quality          |
+| XX        | Project Managers |
 
 ## Problems/Difficulties
 
