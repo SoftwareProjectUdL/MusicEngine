@@ -4,12 +4,8 @@
 =========================================================
 * Product Page: https://www.creative-tim.com/product/argon-dashboard
 
-
 * Copyright  Creative Tim (http://www.creative-tim.com)
 * Coded by www.creative-tim.com
-
-
-
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
@@ -25,14 +21,12 @@
     Django Argon Dashboard - {% block title %} Open-Source Admin Panel {% endblock %} | AppSeed
   </title>
 
-  <!-- Favicon - loaded as static -->
   <link rel="icon" href="/static/assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
   <link rel="stylesheet" href="/static/assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/static/assets/css/argon.css?v=1.2.0" type="text/css">
 
@@ -41,23 +35,48 @@
 
 </head>
 
-<body class="">
+<body class="bg-default">
 
-  {% include "includes-demo/sidenav.html" %}
+  <div class="main-content">
 
-  <div class="main-content" id="panel">
+    {% include "demo/includes-demo/navigation-fullscreen.html" %}
 
-    {% include "includes-demo/navigation.html" %}
-
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+              <h1 class="text-white">
+                <a target="_blank" class="text-white"
+                   href="https://appseed.us/admin-dashboards/django-dashboard-argon">Django Argon</a>
+              </h1>
+              <p class="text-lead text-light">
+                Open-Source Flask Starter with Argon Design 
+                Coded by <a target="_blank" class="text-white" href="https://appseed.us">AppSeed</a>.  
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    
     {% block content %}{% endblock content %}
 
-  </div>
+    {% include "demo/includes-demo/footer-fullscreen.html" %}
 
-  {% include "includes-demo/scripts.html" %}
+  </div>
+    
+  {% include "demo/includes-demo/scripts.html" %}
 
   <!-- Specific JS goes HERE --> 
   {% block javascripts %}{% endblock javascripts %}
-
+  
   <script src="/static/assets/js/argon.js?v=1.2.0"></script>
 
 </body>
