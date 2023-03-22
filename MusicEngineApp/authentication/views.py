@@ -21,7 +21,6 @@ def login_view(request, msg=None):
         else:
             msg = 'Error validating the form'
 
-    # return render(request, "MusicEngineApp/authentication/login.html", {"form": form, "msg": msg})
     return render(request, "authentication/login.html", {"form": form, "msg": msg})
 
 
