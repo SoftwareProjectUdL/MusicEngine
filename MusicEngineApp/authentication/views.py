@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignUpForm
 
 
-def login_view(request):
+def login_view(request, msg=None):
     form = LoginForm(request.POST or None)
-
-    msg = None
-
+    msg = request.GET.get('msg')
     if request.method == "POST":
 
         if form.is_valid():
@@ -16,7 +14,8 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                # user.groups.filter(name="gestor").exists()
+                return redirect("/backoffice")
             else:
                 msg = 'Invalid credentials'
         else:
@@ -49,3 +48,8 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "authentication/register.html", {"form": form, "msg": msg, "success": success})
+
+
+def logout_redirect(request):
+    logout(request)
+    return redirect("/login?msg=Logged out successfully.")
