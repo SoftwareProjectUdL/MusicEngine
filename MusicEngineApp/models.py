@@ -49,7 +49,7 @@ class HorarioTecnico(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    tecnico = models.ForeignKey(Tecnico)
+    tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.nombre
@@ -67,9 +67,9 @@ class Reserva(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    sala = models.ForeignKey(Sala)
-    material = models.ForeignKey(Material)
-    tecnico = models.ForeignKey(Tecnico)
+    sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE)
+    tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.nombre
