@@ -16,6 +16,10 @@ def index(request):
     html_template = loader.get_template('backoffice/index.html')
     return HttpResponse(html_template.render(context, request))
 
+class ReservesListView(ListView):
+    model = Reserva
+    template_name = 'backoffice/reserva/reserva_list.html'
+    context_object_name = 'reserves'
 
 @login_required(login_url="/login/")
 def reservas_list(request):
