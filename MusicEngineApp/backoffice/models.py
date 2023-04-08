@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
+from django.views.generic import ListView
+
 
 # Create your models here.
 
@@ -15,11 +17,6 @@ class Sala(models.Model):
         return self.nombre
 
 
-class SalaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'descripcion')
-    search_fields = ('nombre', 'descripcion')
-
-
 class Material(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -27,10 +24,6 @@ class Material(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
-class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'descripcion')
-    search_fields = ('nombre', 'descripcion')
 
 
 class Tecnico(models.Model):
@@ -42,9 +35,6 @@ class Tecnico(models.Model):
         return self.nombre
 
 
-class TecnicoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'descripcion')
-    search_fields = ('nombre', 'descripcion')
 
 
 class HorarioTecnico(models.Model):
@@ -57,9 +47,6 @@ class HorarioTecnico(models.Model):
         return self.nombre
 
 
-class HorarioTecnicoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'fecha', 'hora_inicio', 'hora_fin', 'tecnico')
-    search_fields = ('nombre', 'fecha', 'hora_inicio', 'hora_fin', 'tecnico')
 
 
 class Reserva(models.Model):
@@ -76,9 +63,3 @@ class Reserva(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
-class ReservaAdmin(admin.ModelAdmin):
-    list_display = (
-        'DNI', 'nombre_cliente', 'telefono', 'fecha', 'hora_inicio', 'hora_fin', 'sala', 'material', 'tecnico')
-    search_fields = (
-        'DNI', 'nombre_cliente', 'telefono', 'fecha', 'hora_inicio', 'hora_fin', 'sala', 'material', 'tecnico')
