@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from MusicEngineApp.views import ReservaListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("MusicEngineApp.authentication.urls")),
     path('', include("MusicEngineApp.backoffice.urls")),
-    path('', include("MusicEngineApp.demo.urls")),
-    path('reservas/', ReservaListView.as_view(), name='reservas_list'),
+    path('', include("MusicEngineApp.demo.urls"))
 ]

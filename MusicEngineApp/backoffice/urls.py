@@ -6,6 +6,8 @@ urlpatterns = [
 
     # The home page
     path('backoffice', views.index, name='home'),
+    path('backoffice/reservas', views.reserves, name='reservas_list'),
+
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
 

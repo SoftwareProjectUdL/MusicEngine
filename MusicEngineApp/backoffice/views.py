@@ -1,8 +1,8 @@
-from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.urls import reverse
+from django.views.generic import ListView
+from MusicEngineApp.backoffice.models import Reserva
 
 
 @login_required(login_url="/login/")
@@ -11,3 +11,10 @@ def index(request):
 
     html_template = loader.get_template('backoffice/index.html')
     return HttpResponse(html_template.render(context, request))
+
+
+def reserves(request):
+    context = {'segment': 'reservas'}
+    html_template = loader.get_template('backoffice/reserva/reserva_list.html')
+    return HttpResponse(html_template.render(context, request))
+
