@@ -4,6 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
 from django.views.generic import ListView
+from datetime import datetime, time
+
 
 
 # Create your models here.
@@ -25,7 +27,6 @@ class Material(models.Model):
         return self.nombre
 
 
-
 class Tecnico(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -33,8 +34,6 @@ class Tecnico(models.Model):
 
     def __unicode__(self):
         return self.nombre
-
-
 
 
 class HorarioTecnico(models.Model):
@@ -46,7 +45,12 @@ class HorarioTecnico(models.Model):
     def __unicode__(self):
         return self.nombre
 
-
+    def horas(self):
+        # get the difference between the two times
+        h_inicio = datetime.combine(datetime.today(), self.hora_inicio)
+        h_fin = datetime.combine(datetime.today(), self.hora_fin)
+        duration = h_fin - h_inicio
+        return duration.total_seconds() / 3600
 
 
 class Reserva(models.Model):
@@ -62,4 +66,3 @@ class Reserva(models.Model):
 
     def __unicode__(self):
         return self.nombre
-

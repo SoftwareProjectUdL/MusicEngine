@@ -1,6 +1,6 @@
 {% extends 'backoffice/layouts/base.html' %}
 
-{% block title %} Tècnics i Especialistes {% endblock title %}
+{% block title %} Hores Tècnics i Especialistes {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -13,11 +13,10 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Tècnics i Especialistes</h6>
+                        <h6 class="h2 text-white d-inline-block mb-0">Hores Tècnics i Especialistes</h6>
                         <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                 <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                <li class="breadcrumb-item" aria-current="page"><a href="#">Objectes</a></li>
                                 <li class="breadcrumb-item active" aria-current="page"><a href="#">Tècnics i
                                     Especialistes</a></li>
                             </ol>
@@ -35,37 +34,29 @@
 
 
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Tècnics i Especialistes</h3>
+                    <h3 class="mb-0">Hores Tècnics i Especialistes</h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col" class="sort" data-sort="name">#</th>
-                            <th scope="col" class="sort" data-sort="budget">Nom</th>
-                            <th scope="col" class="sort" data-sort="status">Descripció</th>
-                            <th scope="col" class="sort" data-sort="completion">Telèfon</th>
+                            <th scope="col" class="sort" data-sort="budget">Nom Tècnic</th>
+                            <th scope="col" class="sort" data-sort="status">Data</th>
+                            <th scope="col" class="sort" data-sort="completion">Hores</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody class="list">
-                        {% for t in tecnicos %}
+                        {% for t in horas_tecnicos %}
                             <tr>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <span>{{ t.id }}</span>
-                                        </a>
-                                    </div>
-                                </th>
                                 <td class="budget">
-                                    {{ t.nombre }}
+                                    {{ t.tecnico.nombre }}
                                 </td>
                                 <td>
-                                    {{ t.descripcion }}
+                                    {{ t.fecha }}
                                 </td>
                                 <td>
-                                    {{ t.telefono }}
+                                    {{ t.horas }}
                                 </td>
                                 <td class="text-right">
                                     <div class="dropdown">
@@ -74,7 +65,7 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{% url 'tecnicos_delete' %}{{ t.id }}">Borrar</a>
+                                            <a class="dropdown-item" href="{% url 'horas_tecnicos_delete' %}{{ t.id }}">Borrar</a>
                                         </div>
                                     </div>
                                 </td>
@@ -89,7 +80,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Nou Tècnic o Especialista</h3>
+                                <h3 class="mb-0">Entrar hores</h3>
                             </div>
                             <!--<div class="col-4 text-right">
                                 <a href="#!" class="btn btn-sm btn-primary">Settings</a>
@@ -97,22 +88,26 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{% url 'tecnicos_create' %}">
+                        <form method="post" action="{% url 'horas_tecnicos_create' %}">
                             {% csrf_token %}
                             <!--<h6 class="heading-small text-muted mb-4">User information</h6>-->
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-nom">Nom</label>
-                                            <input type="text" id="input-nom" name="nombre" class="form-control"
-                                                   placeholder="Nom" value="">
+                                            <label class="form-control-label" for="select-tecnic">Tècnic</label>
+                                            <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
+                                                    control-id="ControlID-4">
+                                                    {% for t in tecnicos %}
+                                                        <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                                    {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-telefon">Telèfon</label>
-                                            <input type="number" id="input-telefon" name="telefono" class="form-control"
+                                            <label class="form-control-label" for="input-data">Data</label>
+                                            <input type="date" id="input-data" name="fecha" class="form-control"
                                                    placeholder="">
                                         </div>
                                     </div>
@@ -120,10 +115,23 @@
 
                             </div>
                             <div class="pl-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Descripció</label>
-                                    <textarea rows="4" class="form-control" name="descripcion"
-                                              placeholder="Descripció"></textarea>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-hora-inici">Hora inici</label>
+                                            <input type="time" id="input-hora-inici" name="hora_inicio"
+                                                   class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-hora-final">Hora final</label>
+                                            <input type="time" id="input-hora-final" name="hora_fin"
+                                                   class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-center">

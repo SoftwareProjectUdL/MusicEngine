@@ -7,13 +7,19 @@ from MusicEngineApp.backoffice.views import *
 urlpatterns = [
 
     # The home page
-    path('backoffice', views.index, name='home'),
-    path('backoffice/tecnicos', TecnicoListView.as_view(), name='tecnico_list'),
-    path('backoffice/tecnicos/create', create_tecnico, name='tecnico_create'),
-    path('backoffice/tecnicos/delete/', delete_tecnico, name='tecnico_delete'),
-    path('backoffice/tecnicos/delete/<int:id>', delete_tecnico, name='tecnico_delete'),
+    path('backoffice', views.index, name='home_back'),
 
-    path('backoffice/reservas', ReservesListView.as_view(), name='reserves_list'),
+    path('backoffice/tecnicos', tecnicos_list, name='tecnicos_list'),
+    path('backoffice/tecnicos/create', tecnicos_create, name='tecnicos_create'),
+    path('backoffice/tecnicos/delete/', tecnicos_delete, name='tecnicos_delete'),
+    path('backoffice/tecnicos/delete/<int:id>', tecnicos_delete, name='tecnicos_delete'),
+
+    path('backoffice/horas-tecnicos', horas_tecnicos_list, name='horas_tecnicos_list'),
+    path('backoffice/horas-tecnicos/create', horas_tecnicos_create, name='horas_tecnicos_create'),
+    path('backoffice/horas-tecnicos/delete/', horas_tecnicos_delete, name='horas_tecnicos_delete'),
+    path('backoffice/horas-tecnicos/delete/<int:id>', horas_tecnicos_delete, name='horas_tecnicos_delete'),
+
+    path('backoffice/reservas', reservas_list, name='reservas_list'),
 
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
