@@ -1,0 +1,61 @@
+{% extends 'backoffice/layouts/base.html' %}
+
+{% block title %} Reserves {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Reservas</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#">Reservas</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <h1>Reservas</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>DNI</th>
+                    <th>Nombre Cliente</th>
+                    <th>Fecha</th>
+                </tr>
+                {% for reserva in reserves %}
+                    <tr>
+                        <td>{{ reserva.id }}</td>
+                        <td>{{ reserva.dni }}</td>
+                        <td>{{ reserva.nombre_cliente }}</td>
+                        <td>{{ reserva.fecha }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% include "backoffice/includes/footer.html" %}
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+    <script src="/static/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}

@@ -1,0 +1,158 @@
+{% extends 'backoffice/layouts/base.html' %}
+
+{% block title %} Hores Tècnics i Especialistes {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Hores Tècnics i Especialistes</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#">Tècnics i
+                                    Especialistes</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-xl-8 order-xl-1">
+
+
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Hores Tècnics i Especialistes</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="budget">Nom Tècnic</th>
+                            <th scope="col" class="sort" data-sort="status">Data</th>
+                            <th scope="col" class="sort" data-sort="completion">Hores</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for t in horas_tecnicos %}
+                            <tr>
+                                <td class="budget">
+                                    {{ t.tecnico.nombre }}
+                                </td>
+                                <td>
+                                    {{ t.fecha }}
+                                </td>
+                                <td>
+                                    {{ t.horas }}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" href="{% url 'horas_tecnicos_delete' %}{{ t.id }}">Borrar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-4 order-xl-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Entrar hores</h3>
+                            </div>
+                            <!--<div class="col-4 text-right">
+                                <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'horas_tecnicos_create' %}">
+                            {% csrf_token %}
+                            <!--<h6 class="heading-small text-muted mb-4">User information</h6>-->
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="select-tecnic">Tècnic</label>
+                                            <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
+                                                    control-id="ControlID-4">
+                                                    {% for t in tecnicos %}
+                                                        <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-data">Data</label>
+                                            <input type="date" id="input-data" name="fecha" class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-hora-inici">Hora inici</label>
+                                            <input type="time" id="input-hora-inici" name="hora_inicio"
+                                                   class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-hora-final">Hora final</label>
+                                            <input type="time" id="input-hora-final" name="hora_fin"
+                                                   class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-4">Crear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "backoffice/includes/footer.html" %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+    <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}
