@@ -8,7 +8,11 @@ urlpatterns = [
 
     # The home page
     path('backoffice', views.index, name='home'),
-    path('backoffice/tecnics', TecnicListView.as_view(), name='tecnic_list'),
+    path('backoffice/tecnicos', TecnicoListView.as_view(), name='tecnico_list'),
+    path('backoffice/tecnicos/create', create_tecnico, name='tecnico_create'),
+    path('backoffice/tecnicos/delete/', delete_tecnico, name='tecnico_delete'),
+    path('backoffice/tecnicos/delete/<int:id>', delete_tecnico, name='tecnico_delete'),
+
     path('backoffice/reservas', ReservesListView.as_view(), name='reserves_list'),
 
     # path('', views.index, name='home'),
