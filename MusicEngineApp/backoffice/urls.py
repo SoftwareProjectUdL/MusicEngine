@@ -1,8 +1,7 @@
-from django.shortcuts import redirect
 from django.urls import path
+
 from MusicEngineApp.backoffice import views
 from MusicEngineApp.backoffice.views import *
-
 
 urlpatterns = [
 

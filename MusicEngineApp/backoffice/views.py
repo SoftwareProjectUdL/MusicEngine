@@ -90,6 +90,7 @@ def tecnicos_search(request):
     else:
         return redirect('horas_tecnicos_list')
 
+
 @login_required(login_url="/login/")
 def horas_tecnicos_list(request):
     horas_tecnicos = HorarioTecnico.objects.all()

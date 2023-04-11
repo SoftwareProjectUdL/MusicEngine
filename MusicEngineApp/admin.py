@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from MusicEngineApp.backoffice.models import *
+
 
 # Register your models here.
 class TecnicoAdmin(admin.ModelAdmin):
