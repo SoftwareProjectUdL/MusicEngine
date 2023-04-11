@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 
-from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico
+from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm
+from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material
 
 
 @login_required(login_url="/login/")
@@ -119,3 +119,32 @@ def horas_tecnicos_delete(request, id):
         horas_tecnico.delete()
         return redirect('horas_tecnicos_list')
     return redirect('horas_tecnicos_list')
+
+
+@login_required(login_url="/login/")
+def material_list(request):
+    material = Material.objects.all()
+    return render(request, 'backoffice/material.html',
+                  {'material': material})
+
+
+@login_required(login_url="/login/")
+def material_create(request):
+    if request.method == 'POST':
+        form = MaterialForm(request.POST)
+        if form.is_valid():
+            material = form.save()
+            return redirect('material_list')  # Redirigir al usuario a
+        else:
+            return redirect('material_list')
+    else:
+        return redirect('material_list')
+
+
+@login_required(login_url="/login/")
+def material_delete(request, id):
+    material = Material.objects.get(id=id)
+    if material is not None:
+        material.delete()
+        return redirect('material_list')
+    return redirect('material_list')
