@@ -1,10 +1,12 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
-from django.views.generic import ListView
 
-from MusicEngineApp.backoffice.forms import HorarioTecnicoForm, TecnicoForm
+from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm
 from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico
 
 
@@ -15,20 +17,21 @@ def index(request):
     return HttpResponse(html_template.render(context, request))
 
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def reservas_list(request):
     reserves = Reserva.objects.all()
     return render(request, 'backoffice/reserva/reserva_list.html',
                   {'reserves': reserves, 'segment': 'reservas_list'})
 
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def tecnicos_list(request):
     tecnicos = Tecnico.objects.all()
     return render(request, 'backoffice/tecnicos_especialistas.html',
                   {'tecnicos': tecnicos, 'segment': 'tecnicos_list'})
 
 
+@login_required(login_url="/login/")
 def tecnicos_create(request):
     if request.method == 'POST':
         form = TecnicoForm(request.POST)
@@ -45,6 +48,7 @@ def tecnicos_create(request):
         return redirect('tecnicos_list')
 
 
+@login_required(login_url="/login/")
 def tecnicos_delete(request, id):
     tecnico = Tecnico.objects.get(id=id)
     if tecnico is not None:
@@ -53,12 +57,40 @@ def tecnicos_delete(request, id):
     return redirect('tecnicos_list')
 
 
-# class HorasTecnicoListView(ListView):
-#     model = HorarioTecnico
-#     template_name = 'backoffice/horas_tecnicos_especialistas.html'
-#     context_object_name = 'horas_tecnicos'
+@login_required(login_url="/login/")
+def tecnicos_search(request):
+    if request.method == 'POST':
+        try:
+            fecha = datetime.strptime(request.POST['fecha'], '%Y-%m-%d').date()
 
+        except ValueError:
+            return redirect('horas_tecnicos_list')
 
+        try:
+            hora = datetime.strptime(request.POST['hora'], '%H:%M').time()
+        except ValueError:
+            hora = datetime.strptime('00:01', '%H:%M').time()
+
+        if fecha is not None:
+            consulta_tecnicos = HorarioTecnico.objects.exclude(
+                tecnico_id__in=HorarioTecnico.objects.filter(
+                    Q(fecha=fecha) &
+                    Q(hora_inicio__lte=hora) &
+                    Q(hora_fin__gte=hora)
+                ).values('tecnico_id').distinct()
+            ).values('tecnico__nombre').distinct()
+
+            horas_tecnicos = HorarioTecnico.objects.all()
+            tecnicos = Tecnico.objects.all()
+            return render(request, 'backoffice/horas_tecnicos_especialistas.html',
+                          {'horas_tecnicos': horas_tecnicos, 'tecnicos': tecnicos, 'segment': 'horas_tecnicos_list',
+                           'consulta_tecnicos': consulta_tecnicos})
+        else:
+            return redirect('horas_tecnicos_list')
+    else:
+        return redirect('horas_tecnicos_list')
+
+@login_required(login_url="/login/")
 def horas_tecnicos_list(request):
     horas_tecnicos = HorarioTecnico.objects.all()
     tecnicos = Tecnico.objects.all()
@@ -66,6 +98,7 @@ def horas_tecnicos_list(request):
                   {'horas_tecnicos': horas_tecnicos, 'tecnicos': tecnicos, 'segment': 'horas_tecnicos_list'})
 
 
+@login_required(login_url="/login/")
 def horas_tecnicos_create(request):
     if request.method == 'POST':
         form = HorarioTecnicoForm(request.POST)
@@ -78,6 +111,7 @@ def horas_tecnicos_create(request):
         return redirect('horas_tecnicos_list')
 
 
+@login_required(login_url="/login/")
 def horas_tecnicos_delete(request, id):
     horas_tecnico = HorarioTecnico.objects.get(id=id)
     if horas_tecnico is not None:

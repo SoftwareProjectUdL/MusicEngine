@@ -13,6 +13,7 @@ urlpatterns = [
     path('backoffice/tecnicos/create', tecnicos_create, name='tecnicos_create'),
     path('backoffice/tecnicos/delete/', tecnicos_delete, name='tecnicos_delete'),
     path('backoffice/tecnicos/delete/<int:id>', tecnicos_delete, name='tecnicos_delete'),
+    path('backoffice/tecnicos/search', tecnicos_search, name='tecnicos_search'),
 
     path('backoffice/horas-tecnicos', horas_tecnicos_list, name='horas_tecnicos_list'),
     path('backoffice/horas-tecnicos/create', horas_tecnicos_create, name='horas_tecnicos_create'),
