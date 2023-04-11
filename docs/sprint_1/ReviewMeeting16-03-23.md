@@ -19,6 +19,7 @@ el hecho de completarlo ha sido más costoso.
 Scrum Master: "El equipo ha realizado un buen trabajo, pero debería haberse organizado mejor para poder realizar el
 trabajo de forma más eficiente. Debido a que el ultimo 'issue' no se hubiera retrasado debido a los examenes."
 
+
 ## Brun-up (Velocity) Graph
 
 *Here we need an image reflecting the advances in the Burn-up graph. Complementing the image, we need a small paragraph

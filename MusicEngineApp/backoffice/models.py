@@ -1,11 +1,6 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.db import models
-from django.contrib.auth.models import User
-from django.contrib import admin
-from django.views.generic import ListView
-from datetime import datetime, time
+from datetime import datetime
 
+from django.db import models
 
 
 # Create your models here.

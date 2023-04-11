@@ -31,8 +31,6 @@
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="col-xl-8 order-xl-1">
-
-
                 <div class="card-header border-0">
                     <h3 class="mb-0">Hores Tècnics i Especialistes</h3>
                 </div>
@@ -42,6 +40,8 @@
                         <tr>
                             <th scope="col" class="sort" data-sort="budget">Nom Tècnic</th>
                             <th scope="col" class="sort" data-sort="status">Data</th>
+                            <th scope="col" class="sort" data-sort="status">Hora Inici</th>
+                            <th scope="col" class="sort" data-sort="status">Hora Final</th>
                             <th scope="col" class="sort" data-sort="completion">Hores</th>
                             <th scope="col"></th>
                         </tr>
@@ -54,6 +54,12 @@
                                 </td>
                                 <td>
                                     {{ t.fecha }}
+                                </td>
+                                <td>
+                                    {{ t.hora_inicio }}
+                                </td>
+                                <td>
+                                    {{ t.hora_fin }}
                                 </td>
                                 <td>
                                     {{ t.horas }}
@@ -98,9 +104,9 @@
                                             <label class="form-control-label" for="select-tecnic">Tècnic</label>
                                             <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
                                                     control-id="ControlID-4">
-                                                    {% for t in tecnicos %}
-                                                        <option value="{{ t.id }}">{{ t.nombre }}</option>
-                                                    {% endfor %}
+                                                {% for t in tecnicos %}
+                                                    <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -141,6 +147,55 @@
                         </form>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-4">Consulta Tècnics i Especialistes Disponibles</h3>
+                        <form method="post" action="{% url 'tecnicos_search' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-4">
+                                    <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker1">
+                                            <input name="fecha" type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group">
+                                        <div class="input-group time">
+                                            <input name="hora" type="time" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <button type="submit" class="btn btn-primary mt-0">Consultar</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="budget">Nom Tècnic</th>
+                                </tr>
+                                </thead>
+                                <tbody class="list">
+                                {% for t in consulta_tecnicos %}
+                                    <tr>
+                                        <td class="budget">
+                                            {{ t.tecnico__nombre }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
