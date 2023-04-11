@@ -19,6 +19,8 @@ urlpatterns = [
     path('backoffice/horas-tecnicos/delete/', horas_tecnicos_delete, name='horas_tecnicos_delete'),
     path('backoffice/horas-tecnicos/delete/<int:id>', horas_tecnicos_delete, name='horas_tecnicos_delete'),
 
+    path('backoffice/material', material_list, name='material_list'),
+
     path('backoffice/reservas', reservas_list, name='reservas_list'),
 
     # path('', views.index, name='home'),

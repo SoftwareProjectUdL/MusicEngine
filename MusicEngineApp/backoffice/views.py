@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 
 from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico
+from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material
 
 
 @login_required(login_url="/login/")
@@ -119,3 +119,10 @@ def horas_tecnicos_delete(request, id):
         horas_tecnico.delete()
         return redirect('horas_tecnicos_list')
     return redirect('horas_tecnicos_list')
+
+
+@login_required(login_url="/login/")
+def material_list(request):
+    material = Material.objects.all()
+    return render(request, 'backoffice/material.html',
+                  {'material': material})

@@ -1,0 +1,146 @@
+{% extends 'backoffice/layouts/base.html' %}
+
+{% block title %} Material {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Material</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item" aria-current="page"><a href="#">Objectes</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#">Material</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-xl-8 order-xl-1">
+
+
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Material</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="name">#</th>
+                            <th scope="col" class="sort" data-sort="budget">Nom</th>
+                            <th scope="col" class="sort" data-sort="status">Descripció</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for t in material %}
+                            <tr>
+                                <th scope="row">
+                                    <div class="media align-items-center">
+                                        <a href="#" class="avatar rounded-circle mr-3">
+                                            <span>{{ t.id }}</span>
+                                        </a>
+                                    </div>
+                                </th>
+                                <td class="budget">
+                                    {{ t.nombre }}
+                                </td>
+                                <td>
+                                    {{ t.descripcion }}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <!--<a class="dropdown-item"
+                                               href="{% url 'tecnicos_delete' %}{{ t.id }}">Borrar</a>-->
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-4 order-xl-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Nou Tècnic o Especialista</h3>
+                            </div>
+                            <!--<div class="col-4 text-right">
+                                <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'tecnicos_create' %}">
+                            {% csrf_token %}
+                            <!--<h6 class="heading-small text-muted mb-4">User information</h6>-->
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-nom">Nom</label>
+                                            <input type="text" id="input-nom" name="nombre" class="form-control"
+                                                   placeholder="Nom" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-telefon">Telèfon</label>
+                                            <input type="number" id="input-telefon" name="telefono" class="form-control"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Descripció</label>
+                                    <textarea rows="4" class="form-control" name="descripcion"
+                                              placeholder="Descripció"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-4">Crear</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "backoffice/includes/footer.html" %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+    <script src="/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+
+{% endblock javascripts %}
