@@ -52,7 +52,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-nom">Nom</label>
                                         <input type="text" id="input-nom" class="form-control"
-                                               placeholder="Nom" value="{{ reserva.nombre_cliente }}" name="nombre_cliente">
+                                               placeholder="Nom" value="{{ reserva.nombre_cliente }}"
+                                               name="nombre_cliente">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -90,7 +91,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-hora-inici">Hora inici</label>
                                         <input id="input-hora-inicio" class="form-control" placeholder="Hora inici"
-                                               value="{{ reserva.hora_inicio | time:"H:i" }}" type="time" name="hora_inicio">
+                                               value="{{ reserva.hora_inicio | time:"H:i" }}" type="time"
+                                               name="hora_inicio">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -112,7 +114,8 @@
                                         <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
                                                 control-id="ControlID-4">
                                             {% for t in tecnicos %}
-                                                <option value="{{ t.id }}" {% if reserva.tecnico.id ==  t.id %} selected {% endif %} >{{ t.nombre }}</option>
+                                                <option value="{{ t.id }}" {% if reserva.tecnico.id ==  t.id %}
+                                                        selected {% endif %} >{{ t.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -122,7 +125,8 @@
                                         <label class="form-control-label" for="select-sala">Sala</label>
                                         <select class="form-control" name="sala">
                                             {% for s in salas %}
-                                                <option value="{{ s.id }}" {% if reserva.sala.id ==  s.id %} selected {% endif %} >{{ s.nombre }}</option>
+                                                <option value="{{ s.id }}" {% if reserva.sala.id ==  s.id %}
+                                                        selected {% endif %} >{{ s.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -132,7 +136,8 @@
                                         <label class="form-control-label" for="select-material">Material</label>
                                         <select class="form-control" name="material">
                                             {% for m in materials %}
-                                                <option value="{{ m.id }}" {% if reserva.material.id ==  m.id %} selected {% endif %} >{{ m.nombre }}</option>
+                                                <option value="{{ m.id }}" {% if reserva.material.id ==  m.id %}
+                                                        selected {% endif %} >{{ m.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

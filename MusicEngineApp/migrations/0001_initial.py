@@ -50,7 +50,8 @@ class Migration(migrations.Migration):
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.material')),
                 ('sala', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.sala')),
                 (
-                'tecnico', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.tecnico')),
+                    'tecnico',
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.tecnico')),
             ],
         ),
         migrations.CreateModel(
@@ -61,7 +62,8 @@ class Migration(migrations.Migration):
                 ('hora_inicio', models.TimeField()),
                 ('hora_fin', models.TimeField()),
                 (
-                'tecnico', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.tecnico')),
+                    'tecnico',
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MusicEngineApp.tecnico')),
             ],
         ),
     ]

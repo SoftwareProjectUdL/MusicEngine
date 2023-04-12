@@ -28,7 +28,6 @@ class ReservaForm(forms.ModelForm):
                   'tecnico', 'sala', 'id']
 
     def save(self, commit=True):
-
         return super().save(commit)
 
 

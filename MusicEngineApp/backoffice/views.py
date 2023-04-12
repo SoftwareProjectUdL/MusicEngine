@@ -16,10 +16,11 @@ def index(request):
     html_template = loader.get_template('backoffice/index.html')
     return HttpResponse(html_template.render(context, request))
 
+
 @login_required(login_url="/login/")
 def reservas_list(request):
     reserves = Reserva.objects.all()
-    return render(request, 'backoffice/reserva/reserva_list.html',
+    return render(request, 'backoffice/reserva_list.html',
                   {'reserves': reserves, 'segment': 'reservas_list'})
 
 
@@ -33,9 +34,10 @@ def reservas_view(request, id):
     if id is not None:
         reserva = Reserva.objects.get(id=id)
 
-    return render(request, 'backoffice/reserva/reserva_view.html',
+    return render(request, 'backoffice/reserva_view.html',
                   {'tecnicos': tecnicos, 'materials': materials, 'salas': salas, 'reserva': reserva,
-                'segment': 'reservas_view'})
+                   'segment': 'reservas_view'})
+
 
 @login_required(login_url="/login/")
 def reservas_create(request):
@@ -44,7 +46,7 @@ def reservas_create(request):
         form = ReservaForm(request.POST)
         if form.data.get('id') is not None:
             old_form = ReservaForm(instance=Reserva.objects.get(id=form.data.get('id')))
-            #old_form.data.update({'id': form.data.get('id')})
+            # old_form.data.update({'id': form.data.get('id')})
             old_form.data.update({'nombre_cliente': form.data.get('nombre_cliente')})
             old_form.data.update({'DNI': form.data.get('DNI')})
             old_form.data.update({'telefono': form.data.get('telefono')})
@@ -198,10 +200,12 @@ def material_delete(request, id):
         return redirect('material_list')
     return redirect('material_list')
 
+
 def salas_list(request):
     salas = Sala.objects.all()
     return render(request, 'backoffice/salas.html',
                   {'salas': salas, 'segment': 'salas_list'})
+
 
 def salas_create(request):
     if request.method == 'POST':
@@ -213,6 +217,7 @@ def salas_create(request):
             return redirect('salas_list')
     else:
         return redirect('salas_list')
+
 
 def salas_delete(request, id):
     sala = Sala.objects.get(id=id)
