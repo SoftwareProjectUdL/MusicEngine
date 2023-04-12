@@ -16,16 +16,23 @@ def index(request):
     html_template = loader.get_template('backoffice/index.html')
     return HttpResponse(html_template.render(context, request))
 
-class ReservesListView(ListView):
-    model = Reserva
-    template_name = 'backoffice/reserva/reserva_list.html'
-    context_object_name = 'reserves'
-
 @login_required(login_url="/login/")
 def reservas_list(request):
     reserves = Reserva.objects.all()
     return render(request, 'backoffice/reserva/reserva_list.html',
                   {'reserves': reserves, 'segment': 'reservas_list'})
+
+
+@login_required(login_url="/login/")
+def reservas_view(request):
+    return render(request, 'backoffice/reserva/reserva_view.html',
+                  {'segment': 'reservas_view'})
+
+@login_required(login_url="/login/")
+def reservas_create(request):
+    redirect('reservas_view')
+    # return render(request, 'backoffice/reserva/reserva_view.html',
+                #  {'segment': 'reservas_create'})
 
 
 @login_required(login_url="/login/")

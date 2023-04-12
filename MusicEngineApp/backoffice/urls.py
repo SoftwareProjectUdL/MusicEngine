@@ -25,6 +25,8 @@ urlpatterns = [
     path('backoffice/material/delete/<int:id>', material_delete, name='material_delete'),
 
     path('backoffice/reservas', reservas_list, name='reservas_list'),
+    path('backoffice/reservas/view', reservas_view, name='reservas_view'),
+    path('backoffice/reservas/create', reservas_create, name='reservas_create'),
 
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
