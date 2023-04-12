@@ -25,10 +25,10 @@ urlpatterns = [
     path('backoffice/material/delete/<int:id>', material_delete, name='material_delete'),
 
     path('backoffice/reservas', reservas_list, name='reservas_list'),
-    path('backoffice/reservas/view', reservas_view, name='reservas_view'),
+    path('backoffice/reservas/view/', reservas_view, name='reservas_view'),
     path('backoffice/reservas/view/<int:id>', reservas_view, name='reservas_view'),
     path('backoffice/reservas/create', reservas_create, name='reservas_create'),
-    path('backoffice/reservas/delete', reservas_delete, name='reservas_delete'),
+    path('backoffice/reservas/delete/', reservas_delete, name='reservas_delete'),
     path('backoffice/reservas/delete/<int:id>', reservas_delete, name='reservas_delete'),
 
     # path('', views.index, name='home'),

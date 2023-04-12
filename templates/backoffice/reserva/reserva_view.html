@@ -52,16 +52,17 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-nom">Nom</label>
                                         <input type="text" id="input-nom" class="form-control"
-                                               placeholder="Nom" value="" name="nombre_cliente">
+                                               placeholder="Nom" value="{{ reserva.nombre_cliente }}" name="nombre_cliente">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-telefon">Telèfon</label>
                                         <input type="number" pattern="[0-9]{9}" id="input-telefon" class="form-control"
-                                               placeholder="Telèfon" name="telefono">
+                                               placeholder="Telèfon" name="telefono" value="{{ reserva.telefono }}">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -69,7 +70,7 @@
                                         <label class="form-control-label" for="input-first-dni">DNI</label>
                                         <input type="text" pattern="[0-9]{8}[A-Za-z]{1}" id="input-dni"
                                                class="form-control"
-                                               placeholder="DNI" value="" name="DNI">
+                                               placeholder="DNI" value="{{ reserva.DNI }}" name="DNI">
                                     </div>
                                 </div>
                             </div>
@@ -82,21 +83,21 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-address">Data</label>
                                         <input id="input-data" class="form-control" placeholder="Data"
-                                               value="" type="date" name="fecha">
+                                               value="{{ reserva.fecha | date:"Y-m-d" }}" type="date" name="fecha">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-hora-inici">Hora inici</label>
                                         <input id="input-hora-inicio" class="form-control" placeholder="Hora inici"
-                                               value="" type="time" name="hora_inicio">
+                                               value="{{ reserva.hora_inicio | time:"H:i" }}" type="time" name="hora_inicio">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-hora-final">Hora final</label>
                                         <input id="input-hora-final" class="form-control" placeholder="Hora final"
-                                               value="" type="time" name="hora_fin">
+                                               value="{{ reserva.hora_fin  | time:"H:i" }}" type="time" name="hora_fin">
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +112,7 @@
                                         <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
                                                 control-id="ControlID-4">
                                             {% for t in tecnicos %}
-                                                <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                                <option value="{{ t.id }}" {% if reserva.tecnico.id ==  t.id %} selected {% endif %} >{{ t.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -121,7 +122,7 @@
                                         <label class="form-control-label" for="select-sala">Sala</label>
                                         <select class="form-control" name="sala">
                                             {% for s in salas %}
-                                                <option value="{{ s.id }}">{{ s.nombre }}</option>
+                                                <option value="{{ s.id }}" {% if reserva.sala.id ==  s.id %} selected {% endif %} >{{ s.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -131,7 +132,7 @@
                                         <label class="form-control-label" for="select-material">Material</label>
                                         <select class="form-control" name="material">
                                             {% for m in materials %}
-                                                <option value="{{ m.id }}">{{ m.nombre }}</option>
+                                                <option value="{{ m.id }}" {% if reserva.material.id ==  m.id %} selected {% endif %} >{{ m.nombre }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -140,6 +141,7 @@
 
                         </div>
                     </div>
+                    <input type="hidden" name="id" value="{{ reserva.id }}">
                 </form>
             </div>
         </div>

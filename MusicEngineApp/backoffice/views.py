@@ -28,14 +28,34 @@ def reservas_view(request, id):
     tecnicos = Tecnico.objects.all()
     materials = Material.objects.all()
     salas = Sala.objects.all()
+
+    reserva = Reserva()
+    if id is not None:
+        reserva = Reserva.objects.get(id=id)
+
     return render(request, 'backoffice/reserva/reserva_view.html',
-                  {'tecnicos': tecnicos, 'materials': materials, 'salas': salas,
+                  {'tecnicos': tecnicos, 'materials': materials, 'salas': salas, 'reserva': reserva,
                 'segment': 'reservas_view'})
 
 @login_required(login_url="/login/")
 def reservas_create(request):
+    # provar si actualitza per id
     if request.method == 'POST':
         form = ReservaForm(request.POST)
+        if form.data.get('id') is not None:
+            old_form = ReservaForm(instance=Reserva.objects.get(id=form.data.get('id')))
+            #old_form.data.update({'id': form.data.get('id')})
+            old_form.data.update({'nombre_cliente': form.data.get('nombre_cliente')})
+            old_form.data.update({'DNI': form.data.get('DNI')})
+            old_form.data.update({'telefono': form.data.get('telefono')})
+            old_form.data.update({'fecha': form.data.get('fecha')})
+            old_form.data.update({'hora_inicio': form.data.get('hora_inicio')})
+            old_form.data.update({'hora_fin': form.data.get('hora_fin')})
+            old_form.data.update({'material': form.data.get('material')})
+            old_form.data.update({'tecnico': form.data.get('tecnico')})
+            old_form.data.update({'sala': form.data.get('sala')})
+            old_form.is_bound = True
+            form = old_form
         if form.is_valid():
             reserva = form.save()
             return redirect('reservas_list')  # Redirigir al usuario a
@@ -47,6 +67,9 @@ def reservas_create(request):
 
 @login_required(login_url="/login/")
 def reservas_delete(request, id):
+    reserva = Reserva.objects.get(id=id)
+    if reserva is not None:
+        reserva.delete()
     return redirect('reservas_list')
 
 

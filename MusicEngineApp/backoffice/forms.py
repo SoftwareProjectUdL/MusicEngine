@@ -25,4 +25,10 @@ class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['nombre_cliente', 'DNI', 'telefono', 'fecha', 'hora_inicio', 'hora_fin', 'material',
-                  'tecnico', 'sala']
+                  'tecnico', 'sala', 'id']
+
+    def save(self, commit=True):
+
+        return super().save(commit)
+
+
