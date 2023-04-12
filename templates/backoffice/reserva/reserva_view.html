@@ -31,60 +31,116 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
         <div class="row">
-            <div class="col-xl-12">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <h3 class="mb-0">Reserves</h3>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a href="{% url 'reservas_view' %}" class="btn btn-sm btn-primary">Crear</a>
+            <div class="card col-xl-12">
+                <form method="post" action="{% url 'reservas_create' %}">
+                    {% csrf_token %}
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h3 class="mb-0">Reserves</h3>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">Crear</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col" class="sort" data-sort="budget">#</th>
-                            <th scope="col" class="sort" data-sort="status">DNI</th>
-                            <th scope="col" class="sort" data-sort="status">Nom Client</th>
-                            <th scope="col" class="sort" data-sort="status">Data</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="list">
-                        {% for reserva in reserves %}
-                            <tr>
-                                <td class="budget">
-                                    {{ reserva.id }}
-                                </td>
-                                <td>
-                                    {{ reserva.dni }}
-                                </td>
-                                <td>
-                                    {{ reserva.nombre_cliente }}
-                                </td>
-                                <td>
-                                    {{ reserva.fecha }}
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{% url 'reserva_view' %}{{ reserva.id }}">Veure</a>
-                                            <a class="dropdown-item" href="{% url 'reserva_delete' %}{{ reserva.id }}">Borrar</a>
-                                        </div>
+                    <div class="card-body">
+                        <h6 class="heading-small text-muted mb-4">Informació d'Usuari</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-nom">Nom</label>
+                                        <input type="text" id="input-nom" class="form-control"
+                                               placeholder="Nom" value="" name="nombre_cliente">
                                     </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-telefon">Telèfon</label>
+                                        <input type="number" pattern="[0-9]{9}" id="input-telefon" class="form-control"
+                                               placeholder="Telèfon" name="telefono">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-dni">DNI</label>
+                                        <input type="text" pattern="[0-9]{8}[A-Za-z]{1}" id="input-dni"
+                                               class="form-control"
+                                               placeholder="DNI" value="" name="DNI">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4"/>
+                        <h6 class="heading-small text-muted mb-4">Dades Reserva</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-address">Data</label>
+                                        <input id="input-data" class="form-control" placeholder="Data"
+                                               value="" type="date" name="fecha">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-hora-inici">Hora inici</label>
+                                        <input id="input-hora-inicio" class="form-control" placeholder="Hora inici"
+                                               value="" type="time" name="hora_inicio">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-hora-final">Hora final</label>
+                                        <input id="input-hora-final" class="form-control" placeholder="Hora final"
+                                               value="" type="time" name="hora_fin">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<hr class="my-4"/>
+                        <h6 class="heading-small text-muted mb-4">Dades Reserva</h6>-->
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="select-tecnic">Tècnic</label>
+                                        <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
+                                                control-id="ControlID-4">
+                                            {% for t in tecnicos %}
+                                                <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="select-sala">Sala</label>
+                                        <select class="form-control" name="sala">
+                                            {% for s in salas %}
+                                                <option value="{{ s.id }}">{{ s.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="select-material">Material</label>
+                                        <select class="form-control" name="material">
+                                            {% for m in materials %}
+                                                <option value="{{ m.id }}">{{ m.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

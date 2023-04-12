@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 
-from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material
+from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm, ReservaForm
+from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala
 
 
 @login_required(login_url="/login/")
@@ -24,15 +24,30 @@ def reservas_list(request):
 
 
 @login_required(login_url="/login/")
-def reservas_view(request):
+def reservas_view(request, id):
+    tecnicos = Tecnico.objects.all()
+    materials = Material.objects.all()
+    salas = Sala.objects.all()
     return render(request, 'backoffice/reserva/reserva_view.html',
-                  {'segment': 'reservas_view'})
+                  {'tecnicos': tecnicos, 'materials': materials, 'salas': salas,
+                'segment': 'reservas_view'})
 
 @login_required(login_url="/login/")
 def reservas_create(request):
-    redirect('reservas_view')
-    # return render(request, 'backoffice/reserva/reserva_view.html',
-                #  {'segment': 'reservas_create'})
+    if request.method == 'POST':
+        form = ReservaForm(request.POST)
+        if form.is_valid():
+            reserva = form.save()
+            return redirect('reservas_list')  # Redirigir al usuario a
+        else:
+            return redirect('reservas_list')
+    else:
+        return redirect('reservas_list')
+
+
+@login_required(login_url="/login/")
+def reservas_delete(request, id):
+    return redirect('reservas_list')
 
 
 @login_required(login_url="/login/")
