@@ -1,6 +1,6 @@
 from django import forms
 
-from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva
+from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva, Sala
 
 
 class TecnicoForm(forms.ModelForm):
@@ -32,3 +32,7 @@ class ReservaForm(forms.ModelForm):
         return super().save(commit)
 
 
+class SalaForm(forms.ModelForm):
+    class Meta:
+        model = Sala
+        fields = ['nombre', 'descripcion']
