@@ -49,6 +49,7 @@ class HorarioTecnico(models.Model):
 
 
 class Reserva(models.Model):
+    id = models.AutoField(primary_key=True)
     DNI = models.CharField(max_length=100)
     nombre_cliente = models.CharField(max_length=100)
     telefono = models.CharField(max_length=100)

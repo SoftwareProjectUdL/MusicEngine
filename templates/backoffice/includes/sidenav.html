@@ -56,6 +56,13 @@
                                 <span class="nav-link-text">Material</span>
                             </a>
                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'salas_list' in segment %} active {% endif %}"
+                               href="{% url 'salas_list' %}">
+                                <i class="ni ni-atom text-primary"></i>
+                                <span class="nav-link-text">Sales</span>
+                            </a>
+                    </li>
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
