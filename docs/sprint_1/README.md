@@ -4,7 +4,7 @@
 
 ##### Plantilla
 
-- [DailyMeetingsTemplate.md](./DailyMeetingsTemplate.md)
+- [DailyMeetingsTemplate.md](../DailyMeetingsTemplate.md)
 
 ##### Sprint 1
 
@@ -18,7 +18,7 @@
 
 ##### Plantilla
 
-- [RetrospectiveMeetingTemplate.md](./RetrospectiveMeetingTemplate.md)
+- [RetrospectiveMeetingTemplate.md](../RetrospectiveMeetingTemplate.md)
 
 ##### Sprint 1
 
@@ -28,7 +28,7 @@
 
 ##### Plantilla
 
-- [ReviewMeetingTemplate.md](./ReviewMeetingTemplate.md)
+- [ReviewMeetingTemplate.md](../ReviewMeetingTemplate.md)
 
 ##### Sprint 1
 
@@ -38,7 +38,7 @@
 
 ##### Plantilla
 
-- [SprintPlanningMeetingTemplate.md](./SprintPlanningMeetingTemplate.md)
+- [SprintPlanningMeetingTemplate.md](../SprintPlanningMeetingTemplate.md)
 
 ##### Sprint 1
 
