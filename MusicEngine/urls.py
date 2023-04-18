@@ -19,6 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("MusicEngineApp.authentication.urls")),
-    path('', include("MusicEngineApp.backoffice.urls")),
-    path('', include("MusicEngineApp.demo.urls"))
+    path('backoffice/', include("MusicEngineApp.backoffice.urls")),
+    path('demo/', include("MusicEngineApp.demo.urls"))
 ]
