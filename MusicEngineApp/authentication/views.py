@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 
 from .forms import LoginForm, SignUpForm
 
 
+#@user_passes_test(lambda u: u.is_authenticated is False, login_url='/')
 def login_view(request, msg=None):
     form = LoginForm(request.POST or None)
     msg = request.GET.get('msg')
@@ -15,8 +18,9 @@ def login_view(request, msg=None):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                # user.groups.filter(name="gestor").exists()
-                return redirect("/backoffice")
+                if user.groups.filter(name="gestor").exists():
+                    return redirect("/backoffice")
+                return redirect("/")
             else:
                 msg = 'Invalid credentials'
         else:
@@ -25,6 +29,7 @@ def login_view(request, msg=None):
     return render(request, "authentication/login.html", {"form": form, "msg": msg})
 
 
+@user_passes_test(lambda u: u.is_authenticated is False, login_url='/')
 def register_user(request):
     msg = None
     success = False
@@ -32,24 +37,19 @@ def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
-
-            msg = 'User created - please <a href="/login">login</a>.'
-            success = True
-
-            # return redirect("/login/")
+            user = form.save()
+            group = Group.objects.get(name='client')
+            user.groups.add(group)
+            return redirect("/")
 
         else:
             msg = 'Form is not valid'
     else:
         form = SignUpForm()
-
     return render(request, "authentication/register.html", {"form": form, "msg": msg, "success": success})
 
 
+@user_passes_test(lambda u: u.is_authenticated is True, login_url='/')
 def logout_redirect(request):
     logout(request)
     return redirect("/login?msg=Logged out successfully.")

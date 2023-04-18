@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -10,21 +10,25 @@ from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, Mat
 from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala
 
 
-@login_required(login_url="/login/")
+def can_backoffice(u):
+    return u.is_superuser or u.groups.filter(name__in=['gestio']).exists() is True
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
 def index(request):
     context = {'segment': 'home_back'}
     html_template = loader.get_template('backoffice/index.html')
     return HttpResponse(html_template.render(context, request))
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def reservas_list(request):
     reserves = Reserva.objects.all()
     return render(request, 'backoffice/reserva_list.html',
                   {'reserves': reserves, 'segment': 'reservas_list'})
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def reservas_view(request, id):
     tecnicos = Tecnico.objects.all()
     materials = Material.objects.all()
@@ -39,7 +43,7 @@ def reservas_view(request, id):
                    'segment': 'reservas_view'})
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def reservas_create(request):
     # provar si actualitza per id
     if request.method == 'POST':
@@ -67,7 +71,7 @@ def reservas_create(request):
         return redirect('reservas_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def reservas_delete(request, id):
     reserva = Reserva.objects.get(id=id)
     if reserva is not None:
@@ -75,14 +79,14 @@ def reservas_delete(request, id):
     return redirect('reservas_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def tecnicos_list(request):
     tecnicos = Tecnico.objects.all()
     return render(request, 'backoffice/tecnicos_especialistas.html',
                   {'tecnicos': tecnicos, 'segment': 'tecnicos_list'})
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def tecnicos_create(request):
     if request.method == 'POST':
         form = TecnicoForm(request.POST)
@@ -99,7 +103,7 @@ def tecnicos_create(request):
         return redirect('tecnicos_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def tecnicos_delete(request, id):
     tecnico = Tecnico.objects.get(id=id)
     if tecnico is not None:
@@ -108,7 +112,7 @@ def tecnicos_delete(request, id):
     return redirect('tecnicos_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def tecnicos_search(request):
     if request.method == 'POST':
         try:
@@ -142,7 +146,7 @@ def tecnicos_search(request):
         return redirect('horas_tecnicos_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def horas_tecnicos_list(request):
     horas_tecnicos = HorarioTecnico.objects.all()
     tecnicos = Tecnico.objects.all()
@@ -150,7 +154,7 @@ def horas_tecnicos_list(request):
                   {'horas_tecnicos': horas_tecnicos, 'tecnicos': tecnicos, 'segment': 'horas_tecnicos_list'})
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def horas_tecnicos_create(request):
     if request.method == 'POST':
         form = HorarioTecnicoForm(request.POST)
@@ -163,7 +167,7 @@ def horas_tecnicos_create(request):
         return redirect('horas_tecnicos_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def horas_tecnicos_delete(request, id):
     horas_tecnico = HorarioTecnico.objects.get(id=id)
     if horas_tecnico is not None:
@@ -172,14 +176,14 @@ def horas_tecnicos_delete(request, id):
     return redirect('horas_tecnicos_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def material_list(request):
     material = Material.objects.all()
     return render(request, 'backoffice/material.html',
                   {'material': material, 'segment': 'material_list'})
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def material_create(request):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
@@ -192,7 +196,7 @@ def material_create(request):
         return redirect('material_list')
 
 
-@login_required(login_url="/login/")
+@user_passes_test(can_backoffice, login_url="/login/")
 def material_delete(request, id):
     material = Material.objects.get(id=id)
     if material is not None:
