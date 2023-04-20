@@ -11,7 +11,7 @@ from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, M
 
 
 def can_backoffice(u):
-    return u.is_superuser or u.groups.filter(name__in=['gestio']).exists() is True
+    return u.is_superuser or u.groups.filter(name__in=['gestor', 'comercial']).exists() is True
 
 
 @user_passes_test(can_backoffice, login_url="/login/")

@@ -43,7 +43,16 @@
 
 <body class="">
 
-{% include "backoffice/includes/sidenav.html" %}
+
+{% if request.user.groups.exists %}
+    {% with template_name="backoffice/includes/sidenav-"|add:request.user.groups.all.0.name|add:".html" %}
+        {% include template_name %}
+    {% endwith %}
+{% else %}
+    {% include "backoffice/includes/sidenav-root.html" %}
+{% endif %}
+
+
 
 <div class="main-content" id="panel">
 
