@@ -185,7 +185,7 @@ def material_list(request):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def material_create(request, id):
+def material_save(request, id = None):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         if form.is_valid():
@@ -199,7 +199,7 @@ def material_create(request, id):
         return redirect('material_list')
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def material_update(request, id):
+def material_edit(request, id):
     if id is not None:
         material = Material.objects.all()
         form = MaterialForm(instance=Material.objects.get(id=id))
