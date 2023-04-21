@@ -179,19 +179,32 @@ def horas_tecnicos_delete(request, id):
 @user_passes_test(can_backoffice, login_url="/login/")
 def material_list(request):
     material = Material.objects.all()
+    form = MaterialForm()
     return render(request, 'backoffice/material.html',
-                  {'material': material, 'segment': 'material_list'})
+                  {'material': material, 'segment': 'material_list', 'form': form})
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def material_create(request):
+def material_save(request, id = None):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         if form.is_valid():
+            if id is not None:
+                form.instance.id = id
             material = form.save()
             return redirect('material_list')  # Redirigir al usuario a
         else:
             return redirect('material_list')
+    else:
+        return redirect('material_list')
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def material_edit(request, id):
+    if id is not None:
+        material = Material.objects.all()
+        form = MaterialForm(instance=Material.objects.get(id=id))
+        return render(request, 'backoffice/material.html',
+                      {'material': material, 'segment': 'material_list', 'form': form})
     else:
         return redirect('material_list')
 

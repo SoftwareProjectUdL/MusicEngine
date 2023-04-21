@@ -20,9 +20,12 @@ urlpatterns = [
     path('horas-tecnicos/delete/<int:id>', horas_tecnicos_delete, name='horas_tecnicos_delete'),
 
     path('material', material_list, name='material_list'),
-    path('material/create', material_create, name='material_create'),
+    path('material/save', material_save, name='material_save'),
+    path('material/save/<int:id>', material_save, name='material_save'),
     path('material/delete/', material_delete, name='material_delete'),
     path('material/delete/<int:id>', material_delete, name='material_delete'),
+    path('material/edit/', material_edit, name='material_edit'),
+    path('material/edit/<int:id>', material_edit, name='material_edit'),
 
     path('sales', salas_list, name='salas_list'),
     path('sales/create', salas_create, name='salas_create'),

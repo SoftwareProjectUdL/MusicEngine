@@ -1,4 +1,6 @@
 from datetime import datetime
+from enum import Enum
+from importlib.resources import _
 
 from django.db import models
 
@@ -15,8 +17,19 @@ class Sala(models.Model):
 
 
 class Material(models.Model):
+
+
+    class Estado(models.IntegerChoices):
+        BUENO = 0, _('bueno')
+        REGULAR = 1, _('regular')
+        MALO = 2, _('malo')
+
+
+
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
+    estado = models.IntegerField(default=Estado.BUENO, choices=Estado.choices)
+    cantidad = models.IntegerField()
 
     def __unicode__(self):
         return self.nombre
