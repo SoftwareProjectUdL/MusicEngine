@@ -18,7 +18,7 @@ def login_view(request, msg=None):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                if user.groups.filter(name__in=['gestor', 'comercial']).exists():
+                if user.groups.filter(name__in=['gestor', 'comercial']).exists() or user.is_superuser:
                     return redirect("/backoffice")
                 return redirect("/")
             else:
