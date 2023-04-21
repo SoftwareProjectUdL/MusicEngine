@@ -21,8 +21,11 @@ urlpatterns = [
 
     path('material', material_list, name='material_list'),
     path('material/create', material_create, name='material_create'),
+    path('material/create/<int:id>', material_create, name='material_create'),
     path('material/delete/', material_delete, name='material_delete'),
     path('material/delete/<int:id>', material_delete, name='material_delete'),
+    path('material/update/', material_update, name='material_update'),
+    path('material/update/<int:id>', material_update, name='material_update'),
 
     path('sales', salas_list, name='salas_list'),
     path('sales/create', salas_create, name='salas_create'),

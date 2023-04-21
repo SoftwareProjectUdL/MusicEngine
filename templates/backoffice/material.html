@@ -43,6 +43,8 @@
                             <th scope="col" class="sort" data-sort="name">#</th>
                             <th scope="col" class="sort" data-sort="budget">Nom</th>
                             <th scope="col" class="sort" data-sort="status">Descripció</th>
+                            <th scope="col" class="sort" data-sort="budget">Estat</th>
+                            <th scope="col" class="sort" data-sort="status">Quantitat</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -62,6 +64,12 @@
                                 <td>
                                     {{ t.descripcion }}
                                 </td>
+                                <td>
+                                    {{ t.get_estado_display }}
+                                </td>
+                                <td>
+                                    {{ t.cantidad }}
+                                </td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -71,6 +79,8 @@
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item"
                                                href="{% url 'material_delete' %}{{ t.id }}">Borrar</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'material_update' %}{{ t.id }}">Actualitzar</a>
                                         </div>
                                     </div>
                                 </td>
@@ -85,7 +95,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Nou Material</h3>
+                                <h3 class="mb-0">{% if form.instance.id is None %}Nou{% else %}Modificar{% endif %} Material</h3>
                             </div>
                             <!--<div class="col-4 text-right">
                                 <a href="#!" class="btn btn-sm btn-primary">Settings</a>
@@ -93,30 +103,38 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{% url 'material_create' %}">
+                        <form method="post" action="{% url 'material_create'%}{% if form.instance.id is not None %}/{{ form.instance.id }}{% endif %}">
                             {% csrf_token %}
-                            <!--<h6 class="heading-small text-muted mb-4">User information</h6>-->
                             <div class="pl-lg-4">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-nom">Nom</label>
-                                            <input type="text" id="input-nom" name="nombre" class="form-control"
-                                                   placeholder="Nom" value="">
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ form.nombre.label }}</label>
+                                    {{ form.nombre }}
                                 </div>
-
+                                <span class="text-error">{{ form.nombre.errors }}</span>
                             </div>
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Descripció</label>
-                                    <textarea rows="4" class="form-control" name="descripcion"
-                                              placeholder="Descripció"></textarea>
+                                    <label class="form-control-label" for="select-tecnic">{{ form.descripcion.label }}</label>
+                                    {{ form.descripcion }}
                                 </div>
+                                <span class="text-error">{{ form.descripcion.errors }}</span>
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ form.estado.label }}</label>
+                                    {{ form.estado }}
+                                </div>
+                                <span class="text-error">{{ form.estado.errors }}</span>
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ form.cantidad.label }}</label>
+                                    {{ form.cantidad }}
+                                </div>
+                                <span class="text-error">{{ form.cantidad.errors }}</span>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-4">Crear</button>
+                                <button type="submit" class="btn btn-primary mt-4">{% if form.instance.id is None %}Crear{% else %}Guardar{% endif %}</button>
                             </div>
 
                         </form>
