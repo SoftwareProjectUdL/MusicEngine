@@ -2,12 +2,14 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
+from django.forms import formset_factory, inlineformset_factory
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 
-from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm, ReservaForm, SalaForm
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala
+from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm, ReservaForm, SalaForm, \
+    FacturaForm, LineaFacturaForm, LineaFacturaFormset
+from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala, Factura, LineaFactura
 
 
 def can_backoffice(u):
@@ -29,7 +31,7 @@ def reservas_list(request):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def reservas_view(request, id):
+def reservas_view(request, id = None):
     tecnicos = Tecnico.objects.all()
     materials = Material.objects.all()
     salas = Sala.objects.all()
@@ -185,7 +187,7 @@ def material_list(request):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def material_save(request, id = None):
+def material_save(request, id=None):
     if request.method == 'POST':
         form = MaterialForm(request.POST)
         if form.is_valid():
@@ -197,6 +199,7 @@ def material_save(request, id = None):
             return redirect('material_list')
     else:
         return redirect('material_list')
+
 
 @user_passes_test(can_backoffice, login_url="/login/")
 def material_edit(request, id):
@@ -241,3 +244,43 @@ def salas_delete(request, id):
     if sala is not None:
         sala.delete()
     return redirect('salas_list')
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def facturas_list(request):
+    facturas = Factura.objects.all()
+    return render(request, 'backoffice/factura_list.html',
+                  {'facturas': facturas, 'segment': 'reservas_list'})
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def facturas_view(request, id=None):
+    factura = FacturaForm()
+    # LineaFacturaFormSet = inlineformset_factory(Factura, LineaFactura, form=LineaFacturaForm, extra=1, can_delete=True )
+    linea_factura = LineaFacturaFormset()
+    if id is not None:
+        factura = FacturaForm(instance=Factura.objects.get(id=id))
+        linea_factura = LineaFacturaFormset(instance=factura)
+
+    return render(request, 'backoffice/factura_view.html',
+                  {'factura': factura,
+                   'linea_factura': linea_factura,
+                   'segment': 'factura_view'})
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def facturas_save(request):
+    if request.method == 'POST':
+        factura = FacturaForm(request.POST)
+        linea_factura = LineaFacturaFormset(request.POST)
+        if factura.is_valid() and linea_factura.is_valid():
+            factura = factura.save()
+            linea_factura = linea_factura
+            for f in linea_factura:
+                f.instance.factura = factura
+                f.save()
+            return redirect('facturas_list')
+        else:
+            return redirect('facturas_list')
+    else:
+        return redirect('facturas_list')

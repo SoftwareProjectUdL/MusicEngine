@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import Enum
 from importlib.resources import _
 
+from django.contrib import admin
 from django.db import models
 
 
@@ -17,14 +18,10 @@ class Sala(models.Model):
 
 
 class Material(models.Model):
-
-
     class Estado(models.IntegerChoices):
         BUENO = 0, _('bueno')
         REGULAR = 1, _('regular')
         MALO = 2, _('malo')
-
-
 
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -75,3 +72,27 @@ class Reserva(models.Model):
 
     def __unicode__(self):
         return self.nombre
+
+
+class Factura(models.Model):
+    id = models.AutoField(primary_key=True)
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE)
+    fecha = models.DateField()
+    total = models.IntegerField()
+    lineas = models.ManyToManyField(
+        'LineaFactura',
+        related_name='lineas',
+    )
+
+
+class LineaFactura(models.Model):
+    id = models.AutoField(primary_key=True)
+    factura = models.ForeignKey(Factura, on_delete=models.CASCADE)
+    concepto = models.CharField(max_length=100)
+    cantidad = models.IntegerField()
+    precio = models.IntegerField()
+
+
+class LiniaFacturaAdmin(admin.TabularInline):
+    model = LineaFactura
+    extra = 1
