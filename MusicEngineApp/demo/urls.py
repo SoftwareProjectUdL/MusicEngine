@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.index, name='demo'),
 
     # Matches any html file
-    re_path(r'^demo/.*\.*', views.pages, name='pages'),
+    re_path(r'^.*\.*', views.pages, name='pages'),
 
 ]
