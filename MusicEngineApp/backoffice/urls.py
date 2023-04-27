@@ -47,6 +47,8 @@ urlpatterns = [
     path('facturas/delete/', facturas_delete, name='facturas_delete'),
     path('facturas/delete/<int:id>', facturas_delete, name='facturas_delete'),
 
+    path('facturas/search', facturas_search, name='facturas_search'),
+
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
 
