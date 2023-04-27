@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core import serializers
 from django.db.models import Q
-from django.forms import formset_factory, inlineformset_factory
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
@@ -256,6 +256,9 @@ def facturas_list(request):
 @user_passes_test(can_backoffice, login_url="/login/")
 def facturas_view(request, id=None):
     factura = FacturaForm()
+    # facturas_encoded = serializers.serialize("json", Reserva.objects.values_list("id", "nombre_cliente", "DNI"), cls=DjangoJSONEncoder)
+    facturas_encoded = serializers.serialize("json", Reserva.objects.all())
+
     # LineaFacturaFormSet = inlineformset_factory(Factura, LineaFactura, form=LineaFacturaForm, extra=1, can_delete=True )
     linea_factura = LineaFacturaFormset()
     if id is not None:
@@ -265,6 +268,7 @@ def facturas_view(request, id=None):
     return render(request, 'backoffice/factura_view.html',
                   {'factura': factura,
                    'linea_factura': linea_factura,
+                   'facturas_encoded': facturas_encoded,
                    'segment': 'factura_view'})
 
 

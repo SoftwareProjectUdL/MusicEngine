@@ -125,15 +125,36 @@ class FacturaForm(forms.ModelForm):
         )
     )
 
+
     reserva = forms.ModelChoiceField(
+        required=False,
         queryset=Reserva.objects.all(),
         label="Reservas",
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control', 'onchange': 'fillFields(this)'})
     )
+
+    nombre_cliente = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Nombre",
+                "class": "form-control nombre_cliente"
+            }
+    ))
+
+    dni = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "DNI",
+                "class": "form-control dni"
+            }
+    ))
+
+
+
 
     class Meta:
         model = Factura
-        fields = ['reserva', 'fecha', 'total']
+        fields = ['reserva', 'fecha', 'total', 'nombre_cliente', 'dni']
 
 
 
