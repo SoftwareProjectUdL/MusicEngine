@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import formset_factory
 
-from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva, Sala
+from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva, Sala, Factura, LineaFactura
 
 
 class TecnicoForm(forms.ModelForm):
@@ -53,7 +54,7 @@ class MaterialForm(forms.ModelForm):
 
     class Meta:
         model = Material
-        labels = { 'estado': 'Estado actual' }
+        labels = {'estado': 'Estado actual'}
         fields = ['nombre', 'descripcion', 'estado', 'cantidad']
 
     def __init__(self, *args, **kwargs):
@@ -74,3 +75,87 @@ class SalaForm(forms.ModelForm):
     class Meta:
         model = Sala
         fields = ['nombre', 'descripcion']
+
+
+
+class LineaFacturaForm(forms.ModelForm):
+    concepto = forms.CharField(
+        label='Concepto',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input',
+            'placeholder': 'Concepto'
+        })
+    )
+    cantidad = forms.IntegerField(
+        label='Cantidad',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input quantity',
+            'placeholder': 'Cantidad'
+        })
+    )
+    precio = forms.DecimalField(
+        label='Preu',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input rate',
+            'placeholder': 'Preu'
+        })
+    )
+    class Meta:
+        model = LineaFactura
+        fields = ['concepto', 'precio', 'cantidad']
+
+class FacturaForm(forms.ModelForm):
+    fecha = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeholder": "Fecha",
+                "class": "form-control",
+                "type": "date"
+            }
+        )
+    )
+
+    total = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                "placeholder": "Total",
+                "class": "form-control",
+                "id": "total"
+            }
+        )
+    )
+
+
+    reserva = forms.ModelChoiceField(
+        required=False,
+        queryset=Reserva.objects.all(),
+        label="Reservas",
+        widget=forms.Select(attrs={'class': 'form-control', 'onchange': 'fillFields(this)'})
+    )
+
+    nombre_cliente = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Nombre",
+                "class": "form-control nombre_cliente"
+            }
+    ))
+
+    dni = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "DNI",
+                "class": "form-control dni"
+            }
+    ))
+
+
+
+
+    class Meta:
+        model = Factura
+        fields = ['reserva', 'fecha', 'total', 'nombre_cliente', 'dni']
+
+
+
+LineaFacturaFormset = formset_factory(LineaFacturaForm, extra=1)

@@ -39,6 +39,10 @@ urlpatterns = [
     path('reservas/delete/', reservas_delete, name='reservas_delete'),
     path('reservas/delete/<int:id>', reservas_delete, name='reservas_delete'),
 
+    path('facturas', facturas_list, name='facturas_list'),
+    path('facturas/view/', facturas_view, name='facturas_view'),
+    path('reservas/save', facturas_save, name='facturas_save'),
+
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
 

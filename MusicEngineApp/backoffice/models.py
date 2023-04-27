@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import Enum
 from importlib.resources import _
 
+from django.contrib import admin
 from django.db import models
 
 
@@ -17,14 +18,10 @@ class Sala(models.Model):
 
 
 class Material(models.Model):
-
-
     class Estado(models.IntegerChoices):
         BUENO = 0, _('bueno')
         REGULAR = 1, _('regular')
         MALO = 2, _('malo')
-
-
 
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -73,5 +70,37 @@ class Reserva(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.id) + ' - ' + self.nombre_cliente
+
     def __unicode__(self):
         return self.nombre
+
+
+class Factura(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre_cliente = models.CharField(max_length=100)
+    dni = models.CharField(max_length=100)
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, null=True)
+    fecha = models.DateField()
+    total = models.IntegerField()
+    lineas = models.ManyToManyField(
+        'LineaFactura',
+        related_name='lineas',
+    )
+    def __str__(self):
+        return str(self.id) + ' - ' + self.nombre_cliente
+
+
+
+class LineaFactura(models.Model):
+    id = models.AutoField(primary_key=True)
+    factura = models.ForeignKey(Factura, on_delete=models.CASCADE)
+    concepto = models.CharField(max_length=100)
+    cantidad = models.IntegerField()
+    precio = models.IntegerField()
+
+
+class LiniaFacturaAdmin(admin.TabularInline):
+    model = LineaFactura
+    extra = 1

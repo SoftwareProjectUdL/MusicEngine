@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from MusicEngineApp.backoffice.models import *
 
 
@@ -31,8 +30,16 @@ class ReservaAdmin(admin.ModelAdmin):
         'DNI', 'nombre_cliente', 'telefono', 'fecha', 'hora_inicio', 'hora_fin', 'sala', 'material', 'tecnico')
 
 
+class FacturaAdmin(admin.ModelAdmin):
+    inlines = (LiniaFacturaAdmin,)
+    list_display = ('reserva', 'fecha', 'total')
+    search_fields = ('reserva', 'fecha', 'total')
+
+
 admin.site.register(Reserva, ReservaAdmin)
 admin.site.register(HorarioTecnico, HorarioTecnicoAdmin)
 admin.site.register(Material, MaterialAdmin)
 admin.site.register(Sala, SalaAdmin)
 admin.site.register(Tecnico, TecnicoAdmin)
+admin.site.register(Factura, FacturaAdmin)
+admin.site.register(LineaFactura)
