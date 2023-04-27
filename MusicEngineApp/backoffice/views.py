@@ -1,15 +1,15 @@
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import user_passes_test
 from django.core import serializers
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template import loader
 
 from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm, ReservaForm, SalaForm, \
-    FacturaForm, LineaFacturaForm, LineaFacturaFormset
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala, Factura, LineaFactura
+    FacturaForm, linia_factura_formset
+from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala, Factura
 
 
 def can_backoffice(u):
@@ -31,7 +31,7 @@ def reservas_list(request):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def reservas_view(request, id = None):
+def reservas_view(request, id=None):
     tecnicos = Tecnico.objects.all()
     materials = Material.objects.all()
     salas = Sala.objects.all()
@@ -255,15 +255,21 @@ def facturas_list(request):
 
 @user_passes_test(can_backoffice, login_url="/login/")
 def facturas_view(request, id=None):
-    factura = FacturaForm()
+    factura = FacturaForm(prefix='factura')
     # facturas_encoded = serializers.serialize("json", Reserva.objects.values_list("id", "nombre_cliente", "DNI"), cls=DjangoJSONEncoder)
     facturas_encoded = serializers.serialize("json", Reserva.objects.all())
 
     # LineaFacturaFormSet = inlineformset_factory(Factura, LineaFactura, form=LineaFacturaForm, extra=1, can_delete=True )
-    linea_factura = LineaFacturaFormset()
+    # LineaFacturaFormset = formset_factory(LineaFacturaForm, extra=1)
+    linea_factura = linia_factura_formset(prefix='linea_factura')
+
     if id is not None:
-        factura = FacturaForm(instance=Factura.objects.get(id=id))
-        linea_factura = LineaFacturaFormset(instance=factura)
+        factura = FacturaForm(instance=Factura.objects.get(id=id), prefix='factura')
+        # linea_factura = formset_factory(LineaFacturaForm(instance=LineaFactura.objects.get(factura_id=id)), extra=1)
+
+        # LineaFacturaFormset = inlineformset_factory(Factura, LineaFactura, form=LineaFacturaForm(instance=LineaFactura.objects.get(factura_id=id)),  extra=1)
+        # linea_factura = LineaFacturaFormset()
+        linea_factura = linia_factura_formset(instance=Factura.objects.get(id=id), prefix='linea_factura')
 
     return render(request, 'backoffice/factura_view.html',
                   {'factura': factura,
@@ -273,18 +279,41 @@ def facturas_view(request, id=None):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def facturas_save(request):
+def facturas_save(request, id=None):
     if request.method == 'POST':
-        factura = FacturaForm(request.POST)
-        linea_factura = LineaFacturaFormset(request.POST)
-        if factura.is_valid() and linea_factura.is_valid():
-            factura = factura.save()
-            linea_factura = linea_factura
-            for f in linea_factura:
-                f.instance.factura = factura
-                f.save()
+
+        fact = None
+        if id is not None:
+            fact = get_object_or_404(Factura, pk=id)
+
+        factura = FacturaForm(request.POST, prefix='factura', instance=fact)
+        linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=fact)
+
+        if not factura.is_valid():
             return redirect('facturas_list')
-        else:
+
+        if not linea_factura.is_valid():
             return redirect('facturas_list')
-    else:
-        return redirect('facturas_list')
+
+        # for f in linea_factura:
+        #    if not f.is_valid():
+        #        return redirect('facturas_list')
+
+        factura = factura.save()
+        if fact is None:
+            linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
+        linea_factura = linea_factura.save()
+        # for f in linea_factura:
+        # f.instance.factura = factura
+        # f.instance.id = f.data.get('id')
+        #    f.save()
+
+    return redirect('facturas_list')
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def facturas_delete(request, id):
+    factura = Factura.objects.get(id=id)
+    if factura is not None:
+        factura.delete()
+    return redirect('facturas_list')

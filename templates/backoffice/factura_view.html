@@ -33,6 +33,7 @@
         <div class="row">
             <div class="card col-xl-12">
                 <form method="post" action="
+
                         {% url 'facturas_save' %}{% if factura.instance.id is not None %}/{{ factura.instance.id }}{% endif %}">
                     {% csrf_token %}
                     <div class="card-header border-0">
@@ -41,7 +42,8 @@
                                 <h3 class="mb-0">Factura</h3>
                             </div>
                             <div class="col-6 text-right">
-                                <button type="submit" class="btn btn-sm btn-primary">Crear</button>
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    {% if factura.instance.id is not None %}Guardar{% else %}Crear{% endif %}</button>
                             </div>
                         </div>
                     </div>
@@ -99,7 +101,7 @@
                                     {{ linea_factura.management_form }}
                                     {% for form in linea_factura %}
                                         <tr>
-                                            <td>{{ form.concepto }}</td>
+                                            <td>{{ form.id }}{{ form.factura_id }}{{ form.concepto }}</td>
                                             <td>{{ form.cantidad }}</td>
                                             <td>{{ form.precio }}</td>
                                             <td class="amount"></td>
@@ -146,6 +148,10 @@
             // console.log(amt);
             $('.amount', $tr).html(amt);
             calc_total();
+        });
+
+        $(document).ready(function () {
+            $('table input').trigger("input");
         });
 
         function calc_total() {

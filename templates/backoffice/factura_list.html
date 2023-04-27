@@ -45,6 +45,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="budget">#</th>
+                            <th scope="col" class="sort" data-sort="status">Nom client</th>
                             <th scope="col" class="sort" data-sort="status">Data</th>
                             <th scope="col"></th>
                         </tr>
@@ -54,6 +55,9 @@
                             <tr>
                                 <td class="budget">
                                     {{ factura.id }}
+                                </td>
+                                <td>
+                                    {{ factura.nombre_cliente }}
                                 </td>
                                 <td>
                                     {{ factura.fecha }}
@@ -66,7 +70,7 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item" href="{% url 'facturas_view' %}{{ factura.id }}">Veure</a>
-                                            <a class="dropdown-item" href="{% url 'reservas_delete' %}{{ factura.id }}">Borrar</a>
+                                            <a class="dropdown-item" href="{% url 'facturas_delete' %}{{ factura.id }}">Borrar</a>
                                         </div>
                                     </div>
                                 </td>

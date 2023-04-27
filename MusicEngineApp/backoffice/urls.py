@@ -41,7 +41,11 @@ urlpatterns = [
 
     path('facturas', facturas_list, name='facturas_list'),
     path('facturas/view/', facturas_view, name='facturas_view'),
-    path('reservas/save', facturas_save, name='facturas_save'),
+    path('facturas/view/<int:id>', facturas_view, name='facturas_view'),
+    path('facturas/save', facturas_save, name='facturas_save'),
+    path('facturas/save/<int:id>', facturas_save, name='facturas_save'),
+    path('facturas/delete/', facturas_delete, name='facturas_delete'),
+    path('facturas/delete/<int:id>', facturas_delete, name='facturas_delete'),
 
     # path('', views.index, name='home'),
     # path('', lambda request: redirect('backoffice', permanent=False)),
