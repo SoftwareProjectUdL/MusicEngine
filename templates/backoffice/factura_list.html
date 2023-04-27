@@ -29,7 +29,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-10 order-xl-1">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-6">
@@ -80,6 +80,36 @@
                     </table>
                 </div>
             </div>
+            <div class="col-xl-2 order-xl-1">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Consultar</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'facturas_search' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="search" type="text" class="form-control" value="{{ search }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <button type="submit" class="btn btn-primary mt-0">Consultar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
 

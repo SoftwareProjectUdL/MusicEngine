@@ -317,3 +317,28 @@ def facturas_delete(request, id):
     if factura is not None:
         factura.delete()
     return redirect('facturas_list')
+
+
+@user_passes_test(can_backoffice, login_url="/login/")
+def facturas_search(request):
+    if request.method == 'POST':
+        try:
+            search = request.POST['search']
+        except ValueError:
+            return redirect('facturas_list')
+
+        if search is not None:
+            try:
+                search_number = int(search)
+            except ValueError:
+                search_number = None
+
+            search_facturas = Factura.objects.filter(
+                Q(id=search_number) |
+                Q(nombre_cliente__contains=search)
+            ).distinct()
+
+            return render(request, 'backoffice/factura_list.html',
+                          {'facturas': search_facturas, 'segment': 'facturas_list', 'search': search})
+
+    return redirect('facturas_list')
