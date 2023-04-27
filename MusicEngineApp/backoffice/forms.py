@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import formset_factory
+from django.forms import inlineformset_factory
 
 from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva, Sala, Factura, LineaFactura
 
@@ -77,7 +77,6 @@ class SalaForm(forms.ModelForm):
         fields = ['nombre', 'descripcion']
 
 
-
 class LineaFacturaForm(forms.ModelForm):
     concepto = forms.CharField(
         label='Concepto',
@@ -100,9 +99,20 @@ class LineaFacturaForm(forms.ModelForm):
             'placeholder': 'Preu'
         })
     )
+
     class Meta:
         model = LineaFactura
         fields = ['concepto', 'precio', 'cantidad']
+
+
+linia_factura_formset = inlineformset_factory(
+    Factura, LineaFactura,
+    form=LineaFacturaForm,
+    extra=0,
+    min_num=1,
+    can_delete=True,
+)
+
 
 class FacturaForm(forms.ModelForm):
     fecha = forms.DateField(
@@ -125,7 +135,6 @@ class FacturaForm(forms.ModelForm):
         )
     )
 
-
     reserva = forms.ModelChoiceField(
         required=False,
         queryset=Reserva.objects.all(),
@@ -139,7 +148,7 @@ class FacturaForm(forms.ModelForm):
                 "placeholder": "Nombre",
                 "class": "form-control nombre_cliente"
             }
-    ))
+        ))
 
     dni = forms.CharField(
         widget=forms.TextInput(
@@ -147,15 +156,8 @@ class FacturaForm(forms.ModelForm):
                 "placeholder": "DNI",
                 "class": "form-control dni"
             }
-    ))
-
-
-
+        ))
 
     class Meta:
         model = Factura
         fields = ['reserva', 'fecha', 'total', 'nombre_cliente', 'dni']
-
-
-
-LineaFacturaFormset = formset_factory(LineaFacturaForm, extra=1)
