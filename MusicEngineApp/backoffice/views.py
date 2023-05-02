@@ -287,10 +287,16 @@ def facturas_save(request, id=None):
             fact = get_object_or_404(Factura, pk=id)
 
         factura = FacturaForm(request.POST, prefix='factura', instance=fact)
-        linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=fact)
 
         if not factura.is_valid():
             return redirect('facturas_list')
+
+        factura = factura.save()
+
+        if fact is None:
+            linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
+        else:
+            linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=fact)
 
         if not linea_factura.is_valid():
             return redirect('facturas_list')
@@ -299,10 +305,11 @@ def facturas_save(request, id=None):
         #    if not f.is_valid():
         #        return redirect('facturas_list')
 
-        factura = factura.save()
-        if fact is None:
-            linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
         linea_factura = linea_factura.save()
+
+        #if fact is None:
+            #linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
+
         # for f in linea_factura:
         # f.instance.factura = factura
         # f.instance.id = f.data.get('id')
