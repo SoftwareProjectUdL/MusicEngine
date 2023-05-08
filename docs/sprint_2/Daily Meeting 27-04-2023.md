@@ -17,7 +17,10 @@
 
 | Type | Description                                                | Owner          | Deadline   |
 |------|------------------------------------------------------------|----------------|------------|
-| T    | Configurar el sistema d'autenticació departament comercial | _Guillem Mora_ | 23/04/2023 |
+| T    | Implementar la capacitat de bsucar factures existents per número de factura o per nom del client. | _Gerard Monsó_ | 02/05/2023 |
+| T    | Crear la pàgina de creació de factures, incloent la validació de dades i la creació de registres en la base de dades. | _Gerard Monsó_ | 02/05/2023 |
+| T    | Afegir la funcionalitat de modificació de factures existents per als usuaris del departament Comercial i de Facturció. | _Gerard Monsó_ | 02/05/2023 |
+
 
 T: Task
 D: Decision
