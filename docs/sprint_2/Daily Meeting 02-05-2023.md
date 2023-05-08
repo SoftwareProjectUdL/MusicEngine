@@ -17,7 +17,8 @@
 
 | Type | Description                                                | Owner          | Deadline   |
 |------|------------------------------------------------------------|----------------|------------|
-| T    | Configurar el sistema d'autenticació departament comercial | _Guillem Mora_ | 23/04/2023 |
+| T    | Crear la pàgina de les hores treballades per part del tècnic especialista. | _Gerard Monsó_ | 09/05/2023 |
+| T    | Implementar l'accés als materials amb el seu estat i quantitat. | _Gerard Monsó_ | 09/05/2023 |
 
 T: Task
 D: Decision
