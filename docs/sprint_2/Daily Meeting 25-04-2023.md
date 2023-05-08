@@ -17,7 +17,8 @@
 
 | Type | Description                                                | Owner          | Deadline   |
 |------|------------------------------------------------------------|----------------|------------|
-| T    | Configurar el sistema d'autenticació departament comercial | _Guillem Mora_ | 23/04/2023 |
+| D    | Establir quines mesures de seguretat per assegurar que només els usuaris autoritzats tinguin accés al sistema. | _Guillem Mora_ | 26/04/2023 |
+| T    | Implementar les mesures de seguretat per assegurar que només els usuaris autoritzats tinguin accés al sistema. | _Gerard Monsó_ | 27/04/2023 |
 
 T: Task
 D: Decision
