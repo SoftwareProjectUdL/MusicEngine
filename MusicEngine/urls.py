@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("MusicEngineApp.authentication.urls")),
     path('backoffice/', include("MusicEngineApp.backoffice.urls")),
-    path('demo/', include("MusicEngineApp.demo.urls"))
+    path('demo/', include("MusicEngineApp.demo.urls")),
+    path('', include("MusicEngineApp.public.urls"))
 ]
