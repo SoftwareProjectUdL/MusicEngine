@@ -1,0 +1,51 @@
+<nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <h1 class="text-white bold italic">Music Engine S.L.</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
+      <ul class="navbar-nav mr-auto align-items-lg-center">
+        <li class="nav-item">
+          <a href="{% url 'reserva' %}" class="nav-link {% if 'reserva' in segment %} active {% endif %}">
+            <span class="nav-link-inner--text">Reserva</span>
+          </a>
+        </li>
+        <li class="nav-item d-none d-lg-block ml-lg-4">
+          <a href="#"
+              class="btn btn-neutral">
+            <span class="nav-link-inner--text">Test</span>
+          </a>
+        </li>
+      </ul>
+      <hr class="d-lg-none" />
+      <!--<ul class="navbar-nav align-items-lg-center ml-lg-auto">
+        <li class="nav-item">
+          <a class="nav-link nav-link-icon" href="https://www.facebook.com/webappseed" 
+              data-toggle="tooltip" data-original-title="Like us on Facebook">
+            <i class="fab fa-facebook-square"></i>
+            <span class="nav-link-inner--text d-lg-none">Facebook</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-icon" href="https://twitter.com/webappseed" 
+              data-toggle="tooltip" data-original-title="Follow us on Twitter">
+            <i class="fab fa-twitter-square"></i>
+            <span class="nav-link-inner--text d-lg-none">Twitter</span>
+          </a>
+        </li>
+        <li class="nav-item d-none d-lg-block ml-lg-4">
+          <a href="#-pro"
+              class="btn btn-neutral btn-icon">
+            <span class="btn-inner--icon">
+              <i class="fas fa-rocket mr-2"></i>
+            </span>
+            <span class="nav-link-inner--text">PRO Version</span>
+          </a>
+        </li>
+      </ul>-->
+    </div>
+  </div>
+</nav>
