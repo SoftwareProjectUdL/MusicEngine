@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from MusicEngineApp.backoffice.models import Tecnico, Material, Sala, Reserva
 from MusicEngineApp.public.forms import ReservaForm
 
-
 def can_public(u):
     return u.is_superuser or u.groups.filter(name__in=['client']).exists() is True
 
