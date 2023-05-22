@@ -16,6 +16,9 @@ class Sala(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    def __str__(self):
+        return self.nombre
+
 
 class Material(models.Model):
     class Estado(models.IntegerChoices):
@@ -31,6 +34,9 @@ class Material(models.Model):
     def __unicode__(self):
         return self.nombre
 
+    def __str__(self):
+        return self.nombre
+
 
 class Tecnico(models.Model):
     nombre = models.CharField(max_length=100)
@@ -38,6 +44,9 @@ class Tecnico(models.Model):
     telefono = models.CharField(max_length=100)
 
     def __unicode__(self):
+        return self.nombre
+
+    def __str__(self):
         return self.nombre
 
 
@@ -58,6 +67,7 @@ class HorarioTecnico(models.Model):
         return duration.total_seconds() / 3600
 
 
+
 class Reserva(models.Model):
     id = models.AutoField(primary_key=True)
     DNI = models.CharField(max_length=100)
@@ -71,10 +81,10 @@ class Reserva(models.Model):
     tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.id) + ' - ' + self.nombre_cliente
+        return self.nombre_cliente
 
     def __unicode__(self):
-        return self.nombre
+        return self.nombre_cliente
 
 
 class Factura(models.Model):
@@ -88,9 +98,9 @@ class Factura(models.Model):
         'LineaFactura',
         related_name='lineas',
     )
+
     def __str__(self):
         return str(self.id) + ' - ' + self.nombre_cliente
-
 
 
 class LineaFactura(models.Model):
