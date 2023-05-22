@@ -1,0 +1,68 @@
+{% extends 'public/layouts/base-fullscreen.html' %}
+
+{% block title %} Reserva {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+    <div class="container-fluid" style="width: 80%;">
+        <div class="row">
+            <div class="card col-xl-12">
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="budget">#</th>
+                            <th scope="col" class="sort" data-sort="status">Data</th>
+                            <th scope="col" class="sort" data-sort="status">Hora Inicio</th>
+                            <th scope="col" class="sort" data-sort="status">Hora Final<th>
+                            <th scope="col" class="sort" data-sort="status">Sala<th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for reserva in reserves %}
+                            <tr>
+                                <td class="budget">
+                                    {{ reserva.id }}
+                                </td>
+                                <td>
+                                    {{ reserva.fecha }}
+                                </td>
+                                <td>
+                                    {{ reserva.hora_inicio }}
+                                </td>
+                                <td>
+                                    {{ reserva.hora_fin }}
+                                </td>
+                                <td>
+                                    {{ reserva.sala }}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" href="{% url 'reservas_view' %}{{ reserva.id }}">Veure</a>
+                                            <a class="dropdown-item" href="{% url 'reservas_delete' %}{{ reserva.id }}">Borrar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
