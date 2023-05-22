@@ -1,11 +1,46 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 
-from .forms import LoginForm, SignUpForm
+from MusicEngineApp.backoffice.models import Tecnico, Material, Sala, Reserva
+from MusicEngineApp.public.forms import ReservaForm
 
 
-@user_passes_test(lambda u: u.is_authenticated is False, login_url='/')
-def home_view(request, msg=None):
-    return render(request, "public/home.html", {})
+def can_public(u):
+    return u.is_superuser or u.groups.filter(name__in=['client']).exists() is True
+
+
+@user_passes_test(can_public, login_url='/login/')
+def home_view(request):
+    return render(request, "public/home.html", {'segment': 'home'})
+
+
+@user_passes_test(can_public, login_url='/login/')
+def reserva_view(request):
+    tecnicos = Tecnico.objects.all()
+    materials = Material.objects.all()
+    salas = Sala.objects.all()
+    reserva = ReservaForm({'nombre_cliente': request.user.username})
+    return render(request, "public/reserva.html",
+                  {'segment': 'reserva', 'tecnicos': tecnicos, 'materials': materials, 'salas': salas,
+                   'reserva': reserva})
+
+
+@user_passes_test(can_public, login_url='/login/')
+def reserva_save(request):
+    if request.method == 'POST':
+        form = ReservaForm(request.POST)
+        if form.is_valid():
+            reserva = form.save()
+            return render(request, "public/reserva.html",
+                          {'segment': 'reserva', 'popup': 'Reserva creada correctament.', 'reserva': reserva})
+        else:
+            return redirect('reserva')
+    else:
+        return redirect('reserva')
+
+
+@user_passes_test(can_public, login_url='/login/')
+def historico_view(request):
+    reservas = Reserva.objects.filter(nombre_cliente=request.user.username)
+    return render(request, "public/historico-reservas.html",
+                  {'segment': 'hisotrico', 'reserves': reservas})
