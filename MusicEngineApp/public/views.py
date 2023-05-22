@@ -7,7 +7,6 @@ from MusicEngineApp.public.forms import ReservaForm
 def can_public(u):
     return u.is_superuser or u.groups.filter(name__in=['client']).exists() is True
 
-
 @user_passes_test(can_public, login_url='/login/')
 def home_view(request):
     return render(request, "public/home.html", {'segment': 'home'})
@@ -39,3 +38,10 @@ def reserva_save(request):
             return redirect('reserva')
     else:
         return redirect('reserva')
+
+@user_passes_test(can_public, login_url='/login/')
+def historico_view(request):
+    reservas = Reserva.objects.filter(nombre_cliente=request.user.username)
+    return render(request, "public/historico-reservas.html",
+                  {'segment': 'hisotrico', 'reserves': reservas})
+

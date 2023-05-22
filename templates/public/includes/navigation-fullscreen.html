@@ -13,6 +13,11 @@
             <span class="nav-link-inner--text">Reserva</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{% url 'historico' %}" class="nav-link {% if 'historico' in segment %} active {% endif %}">
+            <span class="nav-link-inner--text">Històric</span>
+          </a>
+        </li>
         <li class="nav-item d-none d-lg-block ml-lg-4">
           <a href="#"
               class="btn btn-neutral">

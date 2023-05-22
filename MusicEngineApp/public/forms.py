@@ -58,6 +58,7 @@ class ReservaForm(forms.ModelForm):
 
     nombre_cliente = forms.CharField(
         required=False,
+        widget=forms.HiddenInput()
     )
 
     DNI = forms.CharField(
