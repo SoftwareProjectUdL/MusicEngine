@@ -4,10 +4,8 @@ from django.shortcuts import render, redirect
 from MusicEngineApp.backoffice.models import Tecnico, Material, Sala, Reserva
 from MusicEngineApp.public.forms import ReservaForm
 
-
 def can_public(u):
     return u.is_superuser or u.groups.filter(name__in=['client']).exists() is True
-
 
 @user_passes_test(can_public, login_url='/login/')
 def home_view(request):
@@ -30,6 +28,9 @@ def reserva_save(request):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
+            form.nombre_cliente = request.user.username
+            #form.DNI = request.user.dni
+            #form.telefono = request.user.telefono
             reserva = form.save()
             return render(request, "public/reserva.html",
                           {'segment': 'reserva', 'popup': 'Reserva creada correctament.', 'reserva': reserva})
@@ -38,9 +39,9 @@ def reserva_save(request):
     else:
         return redirect('reserva')
 
-
 @user_passes_test(can_public, login_url='/login/')
 def historico_view(request):
     reservas = Reserva.objects.filter(nombre_cliente=request.user.username)
     return render(request, "public/historico-reservas.html",
                   {'segment': 'hisotrico', 'reserves': reservas})
+
