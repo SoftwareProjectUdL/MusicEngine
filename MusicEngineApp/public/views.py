@@ -39,9 +39,22 @@ def reserva_save(request):
     else:
         return redirect('reserva')
 
+
+@user_passes_test(can_public, login_url='/login/')
+def reserva_state(request, id, estado):
+    reserva = Reserva.objects.get(id=id)
+    reserva.estado = estado
+    reserva.save()
+    return redirect('historico')
+
+
+
+
 @user_passes_test(can_public, login_url='/login/')
 def historico_view(request):
     reservas = Reserva.objects.filter(nombre_cliente=request.user.username)
+    estado = Reserva.Estado
     return render(request, "public/historico-reservas.html",
-                  {'segment': 'hisotrico', 'reserves': reservas})
+                  {'segment': 'hisotrico', 'reserves': reservas, 'estado': estado})
+
 

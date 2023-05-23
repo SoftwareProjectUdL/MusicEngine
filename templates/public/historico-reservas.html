@@ -18,8 +18,9 @@
                             <th scope="col" class="sort" data-sort="budget">#</th>
                             <th scope="col" class="sort" data-sort="status">Data</th>
                             <th scope="col" class="sort" data-sort="status">Hora Inicio</th>
-                            <th scope="col" class="sort" data-sort="status">Hora Final<th>
-                            <th scope="col" class="sort" data-sort="status">Sala<th>
+                            <th scope="col" class="sort" data-sort="status">Hora Final</th>
+                            <th scope="col" class="sort" data-sort="status">Sala</th>
+                            <th scope="col" class="sort" data-sort="status">Estado</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -41,6 +42,9 @@
                                 <td>
                                     {{ reserva.sala }}
                                 </td>
+                                <td>
+                                    {{ reserva.get_estado_display }}
+                                </td>
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
@@ -48,8 +52,8 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{% url 'reservas_view' %}{{ reserva.id }}">Veure</a>
-                                            <a class="dropdown-item" href="{% url 'reservas_delete' %}{{ reserva.id }}">Borrar</a>
+                                            <a class="dropdown-item" href="{% url 'reserva_state' %}{{ reserva.id }}/{{ estado.CANCELADA }}">Cancelar</a>
+                                            <a class="dropdown-item" href="{% url 'reserva_state' %}{{ reserva.id }}/{{ estado.PAGADA }}">Pagar</a>
                                         </div>
                                     </div>
                                 </td>

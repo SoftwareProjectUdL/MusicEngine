@@ -69,6 +69,13 @@ class HorarioTecnico(models.Model):
 
 
 class Reserva(models.Model):
+
+    class Estado(models.IntegerChoices):
+        PENDIENTE = 0, _('pendiente')
+        VALIDADA = 1, _('validada')
+        PAGADA = 2, _('pagada')
+        CANCELADA = 3, _('cancelada')
+
     id = models.AutoField(primary_key=True)
     DNI = models.CharField(max_length=100)
     nombre_cliente = models.CharField(max_length=100)
@@ -79,6 +86,8 @@ class Reserva(models.Model):
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
+    estado = models.IntegerField(default=Estado.PENDIENTE, choices=Estado.choices)
+
 
     def __str__(self):
         return self.nombre_cliente

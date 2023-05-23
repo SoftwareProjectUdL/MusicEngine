@@ -36,35 +36,24 @@ def reservas_view(request, id=None):
     materials = Material.objects.all()
     salas = Sala.objects.all()
 
-    reserva = Reserva()
+    # reserva = Reserva()
+    reserva_form = ReservaForm()
     if id is not None:
-        reserva = Reserva.objects.get(id=id)
+        # reserva = Reserva.objects.get(id=id)
+        reserva_form = ReservaForm(instance=Reserva.objects.get(id=id))
 
     return render(request, 'backoffice/reserva_view.html',
-                  {'tecnicos': tecnicos, 'materials': materials, 'salas': salas, 'reserva': reserva,
-                   'segment': 'reservas_view'})
+                  {'tecnicos': tecnicos, 'materials': materials, 'salas': salas,
+                   'reserva_form': reserva_form, 'segment': 'reservas_view'})
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def reservas_create(request):
-    # provar si actualitza per id
+def reservas_save(request, id = None):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
-        if form.data.get('id') is not None:
-            old_form = ReservaForm(instance=Reserva.objects.get(id=form.data.get('id')))
-            # old_form.data.update({'id': form.data.get('id')})
-            old_form.data.update({'nombre_cliente': form.data.get('nombre_cliente')})
-            old_form.data.update({'DNI': form.data.get('DNI')})
-            old_form.data.update({'telefono': form.data.get('telefono')})
-            old_form.data.update({'fecha': form.data.get('fecha')})
-            old_form.data.update({'hora_inicio': form.data.get('hora_inicio')})
-            old_form.data.update({'hora_fin': form.data.get('hora_fin')})
-            old_form.data.update({'material': form.data.get('material')})
-            old_form.data.update({'tecnico': form.data.get('tecnico')})
-            old_form.data.update({'sala': form.data.get('sala')})
-            old_form.is_bound = True
-            form = old_form
         if form.is_valid():
+            if id is not None:
+                form.instance.id = id
             reserva = form.save()
             return redirect('reservas_list')  # Redirigir al usuario a
         else:
