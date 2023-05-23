@@ -35,7 +35,8 @@ urlpatterns = [
     path('reservas', reservas_list, name='reservas_list'),
     path('reservas/view/', reservas_view, name='reservas_view'),
     path('reservas/view/<int:id>', reservas_view, name='reservas_view'),
-    path('reservas/create', reservas_create, name='reservas_create'),
+    path('reservas/save', reservas_save, name='reservas_save'),
+    path('reservas/save/<int:id>', reservas_save, name='reservas_save'),
     path('reservas/delete/', reservas_delete, name='reservas_delete'),
     path('reservas/delete/<int:id>', reservas_delete, name='reservas_delete'),
 
