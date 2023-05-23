@@ -36,6 +36,14 @@ class FacturaAdmin(admin.ModelAdmin):
     search_fields = ('reserva', 'fecha', 'total')
 
 
+class TiquetAdmin(admin.ModelAdmin):
+    inlines = (ConversacionTiquetAdmin,)
+    list_display = ('assunto', 'descripcion', 'fecha')
+    search_fields = ('assunto', 'descripcion', 'fecha')
+
+
+
+
 admin.site.register(Reserva, ReservaAdmin)
 admin.site.register(HorarioTecnico, HorarioTecnicoAdmin)
 admin.site.register(Material, MaterialAdmin)
@@ -43,3 +51,6 @@ admin.site.register(Sala, SalaAdmin)
 admin.site.register(Tecnico, TecnicoAdmin)
 admin.site.register(Factura, FacturaAdmin)
 admin.site.register(LineaFactura)
+admin.site.register(Tiquet, TiquetAdmin)
+admin.site.register(ConversacionTiquet)
+
