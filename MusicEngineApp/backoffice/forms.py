@@ -62,10 +62,99 @@ class MaterialForm(forms.ModelForm):
 
 
 class ReservaForm(forms.ModelForm):
+
+    estado = forms.ChoiceField(
+        label="Estado",
+        widget=forms.Select(
+            attrs={
+                "class": "form-control"
+            }
+        ),
+        choices=Reserva.Estado.choices
+    )
+
+    nombre_cliente = forms.CharField(
+        label='Nombre',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input',
+            'placeholder': 'Nombre cliente'
+        })
+    )
+
+    DNI = forms.CharField(
+        required=False,
+        label='DNI',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input',
+            'placeholder': 'DNI'
+        })
+    )
+
+    telefono = forms.CharField(
+        required=False,
+        label='Telefono',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control input',
+            'placeholder': 'Telefono'
+        })
+    )
+
+    fecha = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "placeholder": "Fecha",
+                "class": "form-control",
+                "type": "date"
+            }
+        )
+    )
+
+    hora_inicio = forms.TimeField(
+        widget=forms.TimeInput(
+            attrs={
+                "placeholder": "Hora inicio",
+                "class": "form-control",
+                "type": "time"
+            }
+        )
+    )
+
+    hora_fin = forms.TimeField(
+        widget=forms.TimeInput(
+            attrs={
+                "placeholder": "Hora fin",
+                "class": "form-control",
+                "type": "time"
+            }
+        )
+    )
+
+    material = forms.ModelChoiceField(
+        required=False,
+        queryset=Material.objects.all(),
+        label="Material",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    tecnico = forms.ModelChoiceField(
+        required=False,
+        queryset=Tecnico.objects.all(),
+        label="Tecnico",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    sala = forms.ModelChoiceField(
+        required=False,
+        queryset=Sala.objects.all(),
+        label="Sala",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+
     class Meta:
         model = Reserva
         fields = ['nombre_cliente', 'DNI', 'telefono', 'fecha', 'hora_inicio', 'hora_fin', 'material',
-                  'tecnico', 'sala', 'id']
+                  'tecnico', 'sala', 'id', 'estado']
 
     def save(self, commit=True):
         return super().save(commit)

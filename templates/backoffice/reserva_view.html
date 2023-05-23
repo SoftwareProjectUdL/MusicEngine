@@ -32,7 +32,7 @@
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="card col-xl-12">
-                <form method="post" action="{% url 'reservas_create' %}">
+                <form method="post" action="{% url 'reservas_save'%}{% if reserva_form.instance.id is not None %}/{{ reserva_form.instance.id }}{% endif %}">
                     {% csrf_token %}
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -40,7 +40,7 @@
                                 <h3 class="mb-0">Reserves</h3>
                             </div>
                             <div class="col-6 text-right">
-                                <button type="submit" class="btn btn-sm btn-primary">Crear</button>
+                                <button type="submit" class="btn btn-sm btn-primary">{% if reserva_form.instance.id is not None %}Guardar{% else %}Crear{% endif %}</button>
                             </div>
                         </div>
                     </div>
@@ -51,16 +51,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-nom">Nom</label>
-                                        <input type="text" id="input-nom" class="form-control"
-                                               placeholder="Nom" value="{{ reserva.nombre_cliente }}"
-                                               name="nombre_cliente">
+                                        {{ reserva_form.nombre_cliente }}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-telefon">Telèfon</label>
-                                        <input type="number" pattern="[0-9]{9}" id="input-telefon" class="form-control"
-                                               placeholder="Telèfon" name="telefono" value="{{ reserva.telefono }}">
+                                        {{ reserva_form.telefono }}
                                     </div>
                                 </div>
 
@@ -69,9 +66,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-dni">DNI</label>
-                                        <input type="text" pattern="[0-9]{8}[A-Za-z]{1}" id="input-dni"
-                                               class="form-control"
-                                               placeholder="DNI" value="{{ reserva.DNI }}" name="DNI">
+                                        {{ reserva_form.DNI }}
                                     </div>
                                 </div>
                             </div>
@@ -83,23 +78,19 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-address">Data</label>
-                                        <input id="input-data" class="form-control" placeholder="Data"
-                                               value="{{ reserva.fecha | date:"Y-m-d" }}" type="date" name="fecha">
+                                        {{ reserva_form.fecha}}
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-hora-inici">Hora inici</label>
-                                        <input id="input-hora-inicio" class="form-control" placeholder="Hora inici"
-                                               value="{{ reserva.hora_inicio | time:"H:i" }}" type="time"
-                                               name="hora_inicio">
+                                        {{ reserva_form.hora_inicio }}
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-hora-final">Hora final</label>
-                                        <input id="input-hora-final" class="form-control" placeholder="Hora final"
-                                               value="{{ reserva.hora_fin  | time:"H:i" }}" type="time" name="hora_fin">
+                                        {{ reserva_form.hora_fin }}
                                     </div>
                                 </div>
                             </div>
@@ -111,42 +102,33 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="select-tecnic">Tècnic</label>
-                                        <select class="form-control" name="tecnico" id="exampleFormControlSelect1"
-                                                control-id="ControlID-4">
-                                            {% for t in tecnicos %}
-                                                <option value="{{ t.id }}" {% if reserva.tecnico.id ==  t.id %}
-                                                        selected {% endif %} >{{ t.nombre }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {{ reserva_form.tecnico }}
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="select-sala">Sala</label>
-                                        <select class="form-control" name="sala">
-                                            {% for s in salas %}
-                                                <option value="{{ s.id }}" {% if reserva.sala.id ==  s.id %}
-                                                        selected {% endif %} >{{ s.nombre }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {{ reserva_form.sala }}
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="select-material">Material</label>
-                                        <select class="form-control" name="material">
-                                            {% for m in materials %}
-                                                <option value="{{ m.id }}" {% if reserva.material.id ==  m.id %}
-                                                        selected {% endif %} >{{ m.nombre }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {{ reserva_form.material }}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                        <label class="form-control-label" for="select-estado">Estado</label>
+                                        {{ reserva_form.estado }}
+                                    </div>
+
                             </div>
 
                         </div>
                     </div>
-                    <input type="hidden" name="id" value="{{ reserva.id }}">
+                    {{ reserva_form.id }}
                 </form>
             </div>
         </div>
