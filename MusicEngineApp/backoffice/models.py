@@ -2,8 +2,10 @@ from datetime import datetime
 from enum import Enum
 from importlib.resources import _
 
-from django.contrib import admin
+from django.contrib import admin, auth
 from django.db import models
+from django.contrib.auth.models import User
+
 
 
 # Create your models here.
@@ -122,4 +124,26 @@ class LineaFactura(models.Model):
 
 class LiniaFacturaAdmin(admin.TabularInline):
     model = LineaFactura
+    extra = 1
+
+
+
+class Tiquet(models.Model):
+    id = models.AutoField(primary_key=True)
+    assunto = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=100)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    fecha = models.DateTimeField(default=datetime.now)
+
+
+class ConversacionTiquet(models.Model):
+    id = models.AutoField(primary_key=True)
+    tiquet = models.ForeignKey(Tiquet, on_delete=models.CASCADE)
+    mensaje = models.CharField(max_length=100)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(default=datetime.now)
+
+
+class ConversacionTiquetAdmin(admin.TabularInline):
+    model = ConversacionTiquet
     extra = 1
