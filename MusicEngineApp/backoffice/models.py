@@ -132,7 +132,9 @@ class Tiquet(models.Model):
     id = models.AutoField(primary_key=True)
     assunto = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     fecha = models.DateTimeField(default=datetime.now)
+
 
 class ConversacionTiquet(models.Model):
     id = models.AutoField(primary_key=True)

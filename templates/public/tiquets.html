@@ -1,0 +1,113 @@
+{% extends 'public/layouts/base-fullscreen.html' %}
+
+{% block title %} Reserva {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 order-xl-1">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Tiquets</h3>
+                </div>
+                <div class="table-responsive" style="background: white;">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="name">#</th>
+                            <th scope="col" class="sort" data-sort="budget">Assumpte</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list">
+                        {% for t in tiquets %}
+                            <tr>
+                                <th scope="row">
+                                    <div class="media align-items-center">
+                                        <a href="#" class="avatar rounded-circle mr-3">
+                                            <span>{{ t.id }}</span>
+                                        </a>
+                                    </div>
+                                </th>
+                                <td class="budget">
+                                    {{ t.assunto }}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item"
+                                               href="{% url 'tiquets' %}{{ t.id }}">Veure</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'tiquets_delete' %}{{ t.id }}">Borrar</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-6 order-xl-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">{% if tiquet_form.instance.id is None %}Nou{% else %}Modificar{% endif %} Tiquet</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'tiquets_save'%}{% if tiquet_form.instance.id is not None %}{{ tiquet_form.instance.id }}{% endif %}">
+                            {% csrf_token %}
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ tiquet_form.assunto.label }}</label>
+                                    {{ tiquet_form.assunto }}
+                                </div>
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ tiquet_form.descripcion.label }}</label>
+                                    {{ tiquet_form.descripcion }}
+                                </div>
+                            </div>
+                            <div class="pl-lg-4">
+                                <label class="form-control-label" for="select-tecnic">Conversació</label>
+                            <ul>
+                            {% for c in conversaciones %}
+                                <li><b>{{ c.usuario }}</b>: {{ c.mensaje }}</li>
+                            {% endfor %}
+                            </ul>
+                            </div>
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="select-tecnic">{{ conv_tiquet_form.mensaje.label }}</label>
+                                    {{ conv_tiquet_form.mensaje }}
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-4">{% if tiquet_form.instance.id is None %}Crear{% else %}Guardar{% endif %}</button>
+                            </div>
+                            {{ tiquet_form.usuario }}
+                            {{ conv_tiquet_form.usuario }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
