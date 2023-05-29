@@ -23,8 +23,8 @@ jobs:
     - name: Install Dependencies
       run: |
         pip3 install poetry
+        pip3 install django
         poetry install
-        poetry add Django
     - name: Run Tests
       run: |
         python manage.py test
