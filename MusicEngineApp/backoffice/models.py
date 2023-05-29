@@ -1,6 +1,4 @@
 from datetime import datetime
-from enum import Enum
-from importlib.resources import _
 
 from django.contrib import admin, auth
 from django.db import models
@@ -24,9 +22,9 @@ class Sala(models.Model):
 
 class Material(models.Model):
     class Estado(models.IntegerChoices):
-        BUENO = 0, _('bueno')
-        REGULAR = 1, _('regular')
-        MALO = 2, _('malo')
+        BUENO = 0, ('bueno')
+        REGULAR = 1, ('regular')
+        MALO = 2, ('malo')
 
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
@@ -73,10 +71,10 @@ class HorarioTecnico(models.Model):
 class Reserva(models.Model):
 
     class Estado(models.IntegerChoices):
-        PENDIENTE = 0, _('pendiente')
-        VALIDADA = 1, _('validada')
-        PAGADA = 2, _('pagada')
-        CANCELADA = 3, _('cancelada')
+        PENDIENTE = 0, ('pendiente')
+        VALIDADA = 1, ('validada')
+        PAGADA = 2, ('pagada')
+        CANCELADA = 3, ('cancelada')
 
     id = models.AutoField(primary_key=True)
     DNI = models.CharField(max_length=100)
