@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from MusicEngineApp.backoffice.models import Tecnico, Material, Sala, Reserva, Tiquet, ConversacionTiquet
+from MusicEngineApp.models import Tecnico, Material, Sala, Reserva, Tiquet, ConversacionTiquet
 from MusicEngineApp.public.forms import ReservaForm, TiquetForm, ConversacionTiquetForm
 
 
@@ -81,15 +81,11 @@ def tiquets_list(request, id=None):
 def tiquets_save(request, id=None):
     if request.method == 'POST':
 
-
-
-
-
         form_tiquet = TiquetForm(request.POST, prefix="tiquet")
         form_conv_tiquet = ConversacionTiquetForm(request.POST, prefix="conversacion_tiquet")
 
-        #form_tiquet.instance.usuario = User.objects.get(id=request.user.id)
-        #form_conv_tiquet.instance.usuario = User.objects.get(id=request.user.id)
+        # form_tiquet.instance.usuario = User.objects.get(id=request.user.id)
+        # form_conv_tiquet.instance.usuario = User.objects.get(id=request.user.id)
         # form_conv_tiquet.cleaned_data['usuario'] = request.user.id
         # form_conv_tiquet.changed_data.append('usuario')
         # form_conv_tiquet.instance.usuario_id = request.user.id
@@ -101,13 +97,16 @@ def tiquets_save(request, id=None):
             tiquet = form_tiquet.save()
             form_conv_tiquet.instance.usuario = User.objects.get(id=request.user.id)
             form_conv_tiquet.instance.tiquet = tiquet
-            form_conv_tiquet = ConversacionTiquetForm({'usuario': User.objects.get(id=request.user.id), 'tiquet': Tiquet.objects.get(id=tiquet.id), 'mensaje': request.POST['conversacion_tiquet-mensaje']})
+            form_conv_tiquet = ConversacionTiquetForm(
+                {'usuario': User.objects.get(id=request.user.id), 'tiquet': Tiquet.objects.get(id=tiquet.id),
+                 'mensaje': request.POST['conversacion_tiquet-mensaje']})
             if form_conv_tiquet.is_valid():
                 form_conv_tiquet.save()
             return redirect('/tiquets/' + str(tiquet.id))
         else:
             return redirect('tiquets')
     return redirect('tiquets')
+
 
 @user_passes_test(can_public, login_url='/login/')
 def tiquets_delete(request, id=None):

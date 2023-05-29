@@ -9,7 +9,7 @@ from django.template import loader
 
 from MusicEngineApp.backoffice.forms import TecnicoForm, HorarioTecnicoForm, MaterialForm, ReservaForm, SalaForm, \
     FacturaForm, linia_factura_formset
-from MusicEngineApp.backoffice.models import Reserva, Tecnico, HorarioTecnico, Material, Sala, Factura
+from MusicEngineApp.models import Reserva, Tecnico, HorarioTecnico, Material, Sala, Factura
 
 
 def can_backoffice(u):
@@ -48,7 +48,7 @@ def reservas_view(request, id=None):
 
 
 @user_passes_test(can_backoffice, login_url="/login/")
-def reservas_save(request, id = None):
+def reservas_save(request, id=None):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
@@ -296,8 +296,8 @@ def facturas_save(request, id=None):
 
         linea_factura = linea_factura.save()
 
-        #if fact is None:
-            #linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
+        # if fact is None:
+        # linea_factura = linia_factura_formset(request.POST, prefix='linea_factura', instance=factura)
 
         # for f in linea_factura:
         # f.instance.factura = factura

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from MusicEngineApp.backoffice.models import Tecnico, Reserva, Sala, Material, Tiquet, ConversacionTiquet
+from MusicEngineApp.models import Tecnico, Reserva, Sala, Material, Tiquet, ConversacionTiquet
 
 
 class ReservaForm(forms.ModelForm):
@@ -75,9 +75,7 @@ class ReservaForm(forms.ModelForm):
                   'telefono']
 
 
-
 class TiquetForm(forms.ModelForm):
-
     assunto = forms.CharField(
         label='Assunto',
         widget=forms.TextInput(attrs={
@@ -105,8 +103,8 @@ class TiquetForm(forms.ModelForm):
         model = Tiquet
         fields = ['id', 'assunto', 'descripcion', 'usuario']
 
-class ConversacionTiquetForm(forms.ModelForm):
 
+class ConversacionTiquetForm(forms.ModelForm):
     usuario = forms.ModelChoiceField(
         required=False,
         queryset=User.objects.all(),
@@ -128,6 +126,7 @@ class ConversacionTiquetForm(forms.ModelForm):
             'placeholder': 'missatge'
         })
     )
+
     class Meta:
         model = ConversacionTiquet
         fields = ['id', 'tiquet', 'mensaje', 'usuario']

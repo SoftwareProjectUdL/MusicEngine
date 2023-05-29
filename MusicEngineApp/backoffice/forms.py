@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from MusicEngineApp.backoffice.models import Tecnico, HorarioTecnico, Material, Reserva, Sala, Factura, LineaFactura
+from MusicEngineApp.models import Tecnico, HorarioTecnico, Material, Reserva, Sala, Factura, LineaFactura
 
 
 class TecnicoForm(forms.ModelForm):
@@ -62,7 +62,6 @@ class MaterialForm(forms.ModelForm):
 
 
 class ReservaForm(forms.ModelForm):
-
     estado = forms.ChoiceField(
         label="Estado",
         widget=forms.Select(
@@ -149,7 +148,6 @@ class ReservaForm(forms.ModelForm):
         label="Sala",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-
 
     class Meta:
         model = Reserva
