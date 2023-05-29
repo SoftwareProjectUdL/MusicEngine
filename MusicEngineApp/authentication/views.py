@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from .forms import LoginForm, SignUpForm
 
 
-#@user_passes_test(lambda u: u.is_authenticated is False, login_url='/')
+# @user_passes_test(lambda u: u.is_authenticated is False, login_url='/')
 def login_view(request, msg=None):
     form = LoginForm(request.POST or None)
     msg = request.GET.get('msg')

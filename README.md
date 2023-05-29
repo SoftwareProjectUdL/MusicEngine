@@ -94,9 +94,12 @@ Els prerequisuts
 2. Open project with PyCharm and install requirements 
 3. Install Poetry packages
    ```sh
-   poetry install requisites (pycham automatically)
+   poetry install
    ```
-
+4. Add default data to dataabse:
+    ```
+     python manage.py loaddata default-data.json 
+    ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 

@@ -1,8 +1,6 @@
-from django.contrib import admin
-from MusicEngineApp.backoffice.models import *
+from MusicEngineApp.models import *
 
 
-# Register your models here.
 class TecnicoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion')
     search_fields = ('nombre', 'descripcion')
@@ -42,8 +40,6 @@ class TiquetAdmin(admin.ModelAdmin):
     search_fields = ('assunto', 'descripcion', 'fecha')
 
 
-
-
 admin.site.register(Reserva, ReservaAdmin)
 admin.site.register(HorarioTecnico, HorarioTecnicoAdmin)
 admin.site.register(Material, MaterialAdmin)
@@ -53,4 +49,3 @@ admin.site.register(Factura, FacturaAdmin)
 admin.site.register(LineaFactura)
 admin.site.register(Tiquet, TiquetAdmin)
 admin.site.register(ConversacionTiquet)
-
