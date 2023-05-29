@@ -1,8 +1,10 @@
+from sqlite3 import Date
+
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from MusicEngineApp.models import Tecnico, Material, Sala, Reserva, Tiquet, ConversacionTiquet
+from MusicEngineApp.models import Tecnico, Material, Sala, Reserva, Tiquet, ConversacionTiquet, Factura
 from MusicEngineApp.public.forms import ReservaForm, TiquetForm, ConversacionTiquetForm
 
 
@@ -48,6 +50,12 @@ def reserva_state(request, id, estado):
     reserva = Reserva.objects.get(id=id)
     reserva.estado = estado
     reserva.save()
+    if int(estado) == Reserva.Estado.PAGADA and not Factura.objects.filter(reserva=reserva).exists():
+        factura = Factura(reserva=reserva, total=100, fecha=Date.today(), nombre_cliente=reserva.nombre_cliente, dni=reserva.DNI)
+        factura.save()
+        return redirect('facturas')
+    elif int(estado) == Reserva.Estado.CANCELADA and Factura.objects.filter(reserva=reserva).exists():
+        Factura.objects.get(reserva=reserva).delete()
     return redirect('historico')
 
 
@@ -114,3 +122,9 @@ def tiquets_delete(request, id=None):
         tiquet = Tiquet.objects.get(id=id)
         tiquet.delete()
     return redirect('tiquets')
+
+@user_passes_test(can_public, login_url='/login/')
+def facturas_list(request):
+    facturas = Factura.objects.filter(nombre_cliente=request.user.username)
+    return render(request, 'public/facturas.html',
+                  {'facturas': facturas, 'segment': 'reservas'})

@@ -9,19 +9,25 @@
     <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
       <ul class="navbar-nav mr-auto align-items-lg-center">
         <li class="nav-item">
-          <a href="{% url 'reserva' %}" class="nav-link {% if 'reserva' in segment %} active {% endif %}">
-            <span class="nav-link-inner--text">Reserva</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="{% url 'historico' %}" class="nav-link {% if 'historico' in segment %} active {% endif %}">
             <span class="nav-link-inner--text">Històric</span>
           </a>
         </li>
-        <li class="nav-item d-none d-lg-block ml-lg-4">
-          <a href="{% url 'tiquets' %}"
-              class="btn btn-neutral">
+        <li class="nav-item">
+          <a href="{% url 'tiquets' %}" class="nav-link {% if 'tiquets' in segment %} active {% endif %}">
             <span class="nav-link-inner--text">Tiquets</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'facturas' %}" class="nav-link {% if 'facturas' in segment %} active {% endif %}">
+            <span class="nav-link-inner--text">Facturas</span>
+          </a>
+        </li>
+
+        <li class="nav-item d-none d-lg-block ml-lg-4">
+          <a href="{% url 'reserva' %}"
+              class="btn btn-neutral">
+            <span class="nav-link-inner--text">Reserva</span>
           </a>
         </li>
       </ul>

@@ -15,4 +15,6 @@ urlpatterns = [
     path('tiquets/save/<int:id>', tiquets_save, name="tiquets_save"),
     path('tiquets/delete/', tiquets_delete, name="tiquets_delete"),
     path('tiquets/delete/<int:id>', tiquets_delete, name="tiquets_delete"),
+    path('facturas', facturas_list, name="facturas"),
+
 ]
