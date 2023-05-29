@@ -1,6 +1,6 @@
 {% extends 'public/layouts/base-fullscreen.html' %}
 
-{% block title %} Reserva {% endblock title %}
+{% block title %} Factures {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -11,42 +11,42 @@
     <div class="container-fluid" style="width: 80%;">
         <div class="row">
             <div class="card col-xl-12">
-            <div class="card-header border-0">
-                    <h3 class="mb-0">Històric Reserves</h3>
+                 <div class="card-header border-0">
+                    <h3 class="mb-0">Factures</h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="budget">#</th>
+                            <th scope="col" class="sort" data-sort="status">Nom client</th>
+                            <th scope="col" class="sort" data-sort="status">DNI</th>
+                            <th scope="col" class="sort" data-sort="status">Total</th>
                             <th scope="col" class="sort" data-sort="status">Data</th>
-                            <th scope="col" class="sort" data-sort="status">Hora Inicio</th>
-                            <th scope="col" class="sort" data-sort="status">Hora Final</th>
-                            <th scope="col" class="sort" data-sort="status">Sala</th>
-                            <th scope="col" class="sort" data-sort="status">Estado</th>
+                            <th scope="col" class="sort" data-sort="status">Reserva</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody class="list">
-                        {% for reserva in reserves %}
+                        {% for factura in facturas %}
                             <tr>
                                 <td class="budget">
-                                    {{ reserva.id }}
+                                    {{ factura.id }}
                                 </td>
                                 <td>
-                                    {{ reserva.fecha }}
+                                    {{ factura.nombre_cliente }}
                                 </td>
                                 <td>
-                                    {{ reserva.hora_inicio }}
+                                    {{ factura.DNI }}
                                 </td>
                                 <td>
-                                    {{ reserva.hora_fin }}
+                                    {{ factura.total }}
                                 </td>
                                 <td>
-                                    {{ reserva.sala }}
+                                    {{ factura.fecha }}
                                 </td>
                                 <td>
-                                    {{ reserva.get_estado_display }}
+                                    {{ factura.reserva }}
                                 </td>
                                 <td class="text-right">
                                     <div class="dropdown">
@@ -55,8 +55,7 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="{% url 'reserva_state' %}{{ reserva.id }}/{{ estado.CANCELADA }}">Cancelar</a>
-                                            <a class="dropdown-item" href="{% url 'reserva_state' %}{{ reserva.id }}/{{ estado.PAGADA }}">Pagar</a>
+                                            <a class="dropdown-item" href="{% url 'facturas_view' %}{{ factura.id }}">Veure</a>
                                         </div>
                                     </div>
                                 </td>
