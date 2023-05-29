@@ -23,7 +23,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pip3 install poetry
-        poetry install requisites
+        poetry install
     - name: Run Tests
       run: |
         python manage.py test
