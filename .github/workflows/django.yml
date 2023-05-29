@@ -24,6 +24,7 @@ jobs:
       run: |
         pip3 install poetry
         poetry install
+        poetry add Django
     - name: Run Tests
       run: |
         python manage.py test
