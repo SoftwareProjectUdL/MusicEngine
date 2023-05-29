@@ -23,7 +23,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+        pip3 install poetry
         poetry install requisites
     - name: Run Tests
       run: |
