@@ -1,4 +1,4 @@
-# Daily Meeting: 01-05-2023
+# Daily Meeting: 03-05-2023
 
 | Assistant | Role             |  
 |-----------|------------------|
@@ -9,21 +9,23 @@
 
 ## Problems/Difficulties
 
-| Problem              | Task                                | Owner    | Description                                                                                                  |
-|----------------------|-------------------------------------|----------|--------------------------------------------------------------------------------------------------------------|
-| Error de programació | Enviament de l'informe dels tècnics | _Gerard_ | L'enviament de l'informe dels tècnics ens ha donat problemes. Necessitarem més temps per realitzar la tasca. |
+| Problem | Task  | Owner | Description |
+|---------|-------|-------|-------------|
+| __      | __    | __    | __          |
 
 ## Actions
 
-| Type | Description                                                           | Owner                               | Deadline   |
-|------|-----------------------------------------------------------------------|-------------------------------------|------------|
-| I    | Disponibilitat del tècnic implementada                                | _Guillem Mora_                      |            |
-| I    | Anàlisis de riscos realitzat                                          | _Hector del Egido_ i _Andreu Pérez_ |            |
-| T    | Realitzar els testos escollits                                        | _Marc Bustos_ i _Joel Rozados_      | 03/06/2023 |
-| T    | Oferir la funció de històric de nòmines dels tècnics                  | _Guillem mora_                      | 03/06/2023 |
-| T    | Oferir la funció de històric de nòmines dels tècnics                  | _Guillem mora_                      | 03/06/2023 |
-| T    | Informar a Music Engine de les millores i constatar la seva aprovació | _Andreu Pérez_                      | 03/06/2023 |
-
+| Type  | Description                                                              | Owner                         | Deadline   |
+|-------|--------------------------------------------------------------------------|-------------------------------|------------|
+| I     | El tècnic ja té implementada la funció d'enviament d'un informe          | _Gerard Monsó_                |            |
+| I     | Music Engine està d'acord amb les millores implementades                 | _Andreu Pérez_                |            |
+| I     | L'històric de nòmines s'ha implementat correctament                      | _Guillem Mora_                |            |
+| D     | Decidir l'organització del contingut de la presentació final             | _Tots els participants_       | 04/06/2023 |
+| T     | Implementar testos per comprovar l'enviament dels informes dels tècnics  | _Héctor del Egido_            | 05/06/2023 |
+| T     | Elaboració del tiquet del client                                         | _Gerard Monsó_                | 05/06/2023 |
+| T     | Realitzar les review activities                                          | _Marc Bustos i Joel Rozados_  | 05/06/2023 |
+| T     | Implementar un registre de sessions assistides del client                | _Guillem Mora i Andreu Pérez_ | 05/06/2023 |
+| T     | Revisar i corregir el Quality Plan per entregar una versió definitiva    | _Marc Bustos_                 | 05/06/2023 |
 
 T: Task
 D: Decision
