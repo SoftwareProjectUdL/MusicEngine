@@ -1,11 +1,14 @@
 # Daily Meeting: 03-06-2023
 
-| Assistant | Role             |  
-|-----------|------------------|
-| XXX       | Developers       |   
-| XX        | Requirements     |  
-| XX        | Quality          |
-| XX        | Project Managers |
+| Assistant        | Role             |  
+|------------------|------------------|
+| Gerard Monso     | Developers       | 
+| Andreu Perez     | Developers       |
+| Hector del Egido | Requirements     |  
+| Joel Rozados     | Requirements     | 
+| Marc Bustos      | Quality          |
+| Guillem Mora     | Project Managers |
+
 
 ## Problems/Difficulties
 
