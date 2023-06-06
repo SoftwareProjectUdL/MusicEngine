@@ -1,4 +1,4 @@
-# Sprint Review Title: DD-MM-YYYY
+# Sprint Review Title: 05-06-2023
 
 ## Work Scheduled/Performed
 
@@ -14,9 +14,6 @@
 | Omplenar formulari                     | El tècnic especialista ha de poder omplenar un formulari amb les dades de la sessió realitzada                                | No        |
 
 ## Burn-down Graph
-
-*Here we need an image reflecting the advances in the Burn-down graph. Complementing the image, we need a small
-paragraph describing the Scrum Master opinion about the advances.*
 
 ![img.png](img.png)
 
