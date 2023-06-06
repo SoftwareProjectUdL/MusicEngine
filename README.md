@@ -12,9 +12,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
+[![codebeat badge](https://codebeat.co/badges/a61f307c-876d-46af-af28-5577f1da8ec7)](https://codebeat.co/projects/github-com-softwareprojectudl-musicengine-main)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -166,4 +164,6 @@ infraestructures pertinents.
 
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 
-[JQuery-url]: https://jquery.com 
+[JQuery-url]: https://jquery.com
+
+[codebeat badge]: (https://codebeat.co/badges/a61f307c-876d-46af-af28-5577f1da8ec7)](https://codebeat.co/projects/github-com-softwareprojectudl-musicengine-main)
